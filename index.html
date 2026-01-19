@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nişantaşı Hastanesi - Mesai Takip</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <div id="loginSection" class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-md w-96">
+            <h2 class="text-2xl font-bold mb-6 text-center text-blue-800">Sorumlu Girişi</h2>
+            <input type="text" id="username" placeholder="Kullanıcı Adı" class="w-full p-2 mb-4 border rounded">
+            <input type="password" id="password" placeholder="Şifre" class="w-full p-2 mb-6 border rounded">
+            <button onclick="handleLogin()" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Giriş Yap</button>
+            <p id="loginError" class="text-red-500 mt-4 text-sm hidden">Hatalı kullanıcı adı veya şifre!</p>
+        </div>
+    </div>
+
+    <div id="mainSection" class="hidden p-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-6 bg-white p-4 rounded shadow">
+                <h1 class="text-xl font-bold" id="welcomeMsg">Hoş Geldiniz</h1>
+                <button onclick="logout()" class="text-red-600 font-semibold">Çıkış</button>
+            </div>
+
+            <div class="bg-white p-6 rounded shadow mb-6">
+                <label class="block mb-2 font-bold text-gray-700">Mesai Tarihi Seçin:</label>
+                <input type="date" id="mesaiTarihi" class="p-2 border rounded mb-4 w-full">
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="p-3 border">Personel Adı</th>
+                                <th class="p-3 border">Mesai Kodu</th>
+                                <th class="p-3 border">İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="personelTable">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // BURAYA KENDİ WEB UYGULAMASI URL'NİZİ YAPIŞTIRIN
+        const API_URL = "BURAYA_APPS_SCRIPT_URL_GELECEK";
+        
+        let currentUser = "";
+        let definitions = [];
+        let personnel = [];
+
+        async function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'login', username: user, password: pass })
+            });
+            
+            const result = await response.json();
+            if (result.status === "success") {
+                currentUser = result.userName;
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('mainSection').classList.remove('hidden');
+                document.getElementById('welcomeMsg').innerText = "Sorumlu: " + currentUser;
+                loadInitialData();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        async function loadInitialData() {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({ action: 'getInitialData' })
+            });
+            const data = await response.json();
+            definitions = data.definitions;
+            personnel = data.personnel;
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('personelTable');
+            tbody.innerHTML = personnel.map(p => `
+                <tr class="border-b">
+                    <td class="p-3 font-medium">${p[1]}</td>
+                    <td class="p-3">
+                        <select id="code_${p[0]}" class="border p-1 rounded w-full">
+                            <option value="">Seçiniz...</option>
+                            ${definitions.map(d => `<option value="${d[0]}">${d[0]} (${d[2]}-${d[3]})</option>`).join('')}
+                        </select>
+                    </td>
+                    <td class="p-3 text-center">
+                        <button onclick="saveShift('${p[0]}', '${p[1]}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700">Kaydet</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function saveShift(pId, pName) {
+            const date = document.getElementById('mesaiTarihi').value;
+            const code = document.getElementById('code_' + pId).value;
+            
+            if (!date || !code) return alert("Tarih ve Kod seçiniz!");
+
+            const def = definitions.find(d => d[0] === code);
+            
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    action: 'saveShift',
+                    tarih: date,
+                    personelId: pId,
+                    adSoyad: pName,
+                    mesaiKodu: code,
+                    baslangic: def[2],
+                    bitis: def[3],
+                    kaydeden: currentUser
+                })
+            });
+
+            const res = await response.json();
+            if(res.status === "success") alert(pName + " için kayıt yapıldı!");
+        }
+
+        function logout() { location.reload(); }
+    </script>
+</body>
+</html>
