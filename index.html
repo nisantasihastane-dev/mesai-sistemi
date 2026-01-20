@@ -53,13 +53,22 @@
         .shift-badge {
             background: #3b82f6;
             color: white;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 700;
-            padding: 3px 6px;
+            padding: 4px 6px;
             border-radius: 4px;
             margin-bottom: 3px;
-            display: inline-block;
-            letter-spacing: 0.03em;
+            display: block;
+            letter-spacing: 0.02em;
+            cursor: help;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .shift-badge:hover {
+            background: #1d4ed8;
+            transform: scale(1.05);
+            transition: all 0.2s;
         }
         .toast {
             position: fixed;
@@ -175,13 +184,11 @@
 </head>
 <body>
 
-    <!-- LOADING SPINNER -->
     <div id="spinner" class="hidden fixed inset-0 bg-white/90 backdrop-blur-sm z-[100] flex flex-col items-center justify-center">
         <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
         <p class="text-sm font-bold text-blue-600">İşleniyor...</p>
     </div>
 
-    <!-- LOGIN SECTION -->
     <div id="loginSection" class="flex items-center justify-center min-h-screen p-6">
         <div class="w-full max-w-sm space-y-8">
             <div class="text-center space-y-3">
@@ -196,7 +203,6 @@
         </div>
     </div>
 
-    <!-- MAIN SECTION -->
     <div id="mainSection" class="hidden pb-8">
         <header class="bg-white border-b-2 border-gray-100 px-6 py-4 sticky top-0 z-40 shadow-sm">
             <div class="max-w-6xl mx-auto flex justify-between items-center">
@@ -231,7 +237,6 @@
 
         <main class="max-w-6xl mx-auto p-6 space-y-8">
             
-            <!-- ENTRY TAB -->
             <div id="entryTab">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 bg-gray-50 p-6 rounded-xl">
                     <div class="w-full md:w-auto">
@@ -246,7 +251,6 @@
                 <div class="space-y-4" id="personelListContainer"></div>
             </div>
 
-            <!-- CALENDAR TAB -->
             <div id="calendarTab" class="hidden space-y-8">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-gray-50 p-6 rounded-xl">
                     <h3 class="text-lg font-bold text-slate-900">Aylık Özet Rapor</h3>
@@ -264,14 +268,16 @@
                         class="input-field">
                 </div>
 
-                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-x-auto">
                     <table class="w-full">
                         <thead class="table-header">
                             <tr>
                                 <th class="p-4 text-left">Personel</th>
                                 <th class="p-4 text-center">Gün</th>
-                                <th class="p-4 text-center">Net Saat</th>
+                                <th class="p-4 text-center">Brüt Saat</th>
                                 <th class="p-4 text-center">Mola</th>
+                                <th class="p-4 text-center">Net Saat</th>
+                                <th class="p-4 text-center">Hedef</th>
                                 <th class="p-4 text-center">Fark</th>
                                 <th class="p-4 text-left">Açıklama</th>
                             </tr>
@@ -294,7 +300,6 @@
         </main>
     </div>
 
-    <!-- MODAL OVERLAY -->
     <div id="modalOverlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-6">
         <div id="modalContent" class="w-full max-w-lg bg-white rounded-2xl p-8 shadow-2xl overflow-y-auto max-h-[90vh] custom-scroll"></div>
     </div>
@@ -708,14 +713,14 @@
                 const tbody = document.getElementById('summaryTableBody');
                 tbody.innerHTML = personnel.map(p => {
                     const sArr = data.shifts.filter(s => s[1] == p[0]);
-                    let net = 0, totalMola = 0, days = new Set();
+                    let brut = 0, totalMola = 0, net = 0, days = new Set();
                     let codeCount = {};
                     
                     sArr.forEach(s => { 
-                        net += parseFloat(s[8])||0; 
-                        totalMola += parseFloat(s[7])||0;
+                        brut += parseFloat(s[6])||0;      // Brüt Saat (G sütunu)
+                        totalMola += parseFloat(s[7])||0; // Mola (H sütunu)
+                        net += parseFloat(s[8])||0;       // Net Saat (I sütunu)
                         days.add(s[0]); 
-                        // Mesai kodu sayımı
                         if(codeCount[s[3]]) {
                             codeCount[s[3]]++;
                         } else {
@@ -723,7 +728,6 @@
                         }
                     });
                     
-                    // Açıklama oluştur: HG 9 gün, HN 6 gün
                     const explanation = Object.keys(codeCount).map(code => 
                         `${code} ${codeCount[code]} gün`
                     ).join(', ');
@@ -734,8 +738,10 @@
                     return `<tr class="hover:bg-gray-50">
                         <td class="p-4 text-slate-900">${p[1]}</td>
                         <td class="p-4 text-center text-slate-700">${days.size}</td>
-                        <td class="p-4 text-center font-bold text-slate-900">${net.toFixed(1)} h</td>
+                        <td class="p-4 text-center font-semibold text-slate-600">${brut.toFixed(1)} h</td>
                         <td class="p-4 text-center text-slate-600">${totalMola.toFixed(1)} h</td>
+                        <td class="p-4 text-center font-bold text-slate-900">${net.toFixed(1)} h</td>
+                        <td class="p-4 text-center font-semibold text-blue-600">${target} h</td>
                         <td class="p-4 text-center font-bold ${diff < 0 ? 'text-red-500' : 'text-green-600'}">
                             ${(diff>=0?'+':'')+diff.toFixed(1)} h
                         </td>
@@ -763,7 +769,14 @@
             for(let d=1; d<=dIM; d++) {
                 const ds = (d<10?'0'+d:d)+'.'+month+'.'+year;
                 const daily = shifts.filter(s => s[0] === ds);
-                let html = daily.map(s => `<div class="shift-badge">${s[3]}</div>`).join('');
+                
+                let html = daily.map(s => {
+                    const personelAdi = s[2];
+                    const mesaiKodu = s[3];
+                    const initials = personelAdi.split(' ').map(w => w[0]).join('');
+                    return `<div class="shift-badge" title="${personelAdi} - ${mesaiKodu}">${mesaiKodu} (${initials})</div>`;
+                }).join('');
+                
                 body.innerHTML += `<div class="day-cell"><div class="day-number">${d}</div>${html}</div>`;
             }
         }
