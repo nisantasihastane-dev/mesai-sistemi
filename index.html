@@ -13,96 +13,91 @@
 <body class="bg-slate-100 min-h-screen">
 
     <div id="loginSection" class="flex items-center justify-center min-h-screen">
-        <div class="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-sm border border-gray-100">
-            <h2 class="text-3xl font-bold mb-8 text-center text-blue-900 tracking-tight">Nişantaşı Mesai</h2>
-            <div class="space-y-4">
-                <input type="text" id="username" placeholder="Kullanıcı" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50">
-                <input type="password" id="password" placeholder="Şifre" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50">
-                <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl hover:bg-blue-700 shadow-lg transition">Sisteme Giriş Yap</button>
-            </div>
+        <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-sm border">
+            <h2 class="text-2xl font-bold mb-6 text-center text-blue-900">Sorumlu Girişi</h2>
+            <input type="text" id="username" placeholder="Kullanıcı Adı" class="w-full p-3 border rounded-xl mb-4 outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="password" id="password" placeholder="Şifre" class="w-full p-3 border rounded-xl mb-6 outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="handleLogin()" class="w-full bg-blue-600 text-white font-bold p-3 rounded-xl hover:bg-blue-700 transition">Giriş Yap</button>
         </div>
     </div>
 
-    <div id="mainSection" class="hidden p-4 md:p-6 lg:p-8">
-        <div class="max-w-7xl mx-auto">
+    <div id="mainSection" class="hidden p-4 md:p-8">
+        <div class="max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 bg-white p-6 rounded-3xl shadow-sm gap-4">
                 <div class="flex items-center gap-6">
                     <div>
                         <h1 class="text-xl font-bold text-gray-800" id="welcomeMsg">Hoş Geldiniz</h1>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Aylık Personel Takibi</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Nişantaşı Hastanesi</p>
                     </div>
                     <nav class="flex bg-slate-100 p-1.5 rounded-2xl">
-                        <button onclick="switchTab('entry')" id="tabEntry" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm transition">Kayıt Ekranı</button>
-                        <button onclick="switchTab('calendar')" id="tabCalendar" class="px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition">Aylık Takvim</button>
+                        <button onclick="switchTab('entry')" id="tabEntry" class="px-5 py-2 rounded-xl font-bold text-xs bg-white shadow-sm">Kayıt Ekranı</button>
+                        <button onclick="switchTab('calendar')" id="tabCalendar" class="px-5 py-2 rounded-xl font-bold text-xs text-slate-500">Aylık Takvim</button>
                     </nav>
                 </div>
-                <div class="flex gap-3">
-                    <button onclick="openPersonnelModal()" class="bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-bold text-xs shadow-lg hover:bg-blue-700 transition flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
-                        </svg> Yeni Personel
-                    </button>
-                    <button onclick="location.reload()" class="bg-red-50 text-red-600 px-5 py-2.5 rounded-2xl font-bold text-xs hover:bg-red-100 transition">Çıkış</button>
+                <div class="flex gap-2">
+                    <button onclick="openPersonnelModal()" class="bg-blue-600 text-white px-5 py-2 rounded-xl font-bold text-xs shadow-lg">+ Yeni Personel</button>
+                    <button onclick="location.reload()" class="bg-red-50 text-red-600 px-5 py-2 rounded-xl font-bold text-xs">Çıkış</button>
                 </div>
             </div>
 
             <div id="entryTab" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <div class="mb-8 max-w-xs">
-                    <label class="block text-[10px] font-extrabold text-gray-400 uppercase mb-2 tracking-widest">Çalışma Tarihi Seçin:</label>
-                    <input type="date" id="mesaiTarihi" onchange="loadDataForDate()" class="w-full p-4 border border-gray-100 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-bold text-gray-700">
+                <div class="mb-6 max-w-xs">
+                    <label class="block text-xs font-bold text-gray-400 mb-2 uppercase tracking-widest">Çalışma Tarihi:</label>
+                    <input type="date" id="mesaiTarihi" onchange="loadDataForDate()" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-bold">
                 </div>
                 <div class="overflow-x-auto rounded-2xl border border-gray-100">
                     <table class="w-full text-left">
                         <thead class="bg-slate-50 text-gray-500 text-[10px] uppercase font-bold tracking-widest">
-                            <tr>
-                                <th class="p-5 border-b">Personel Bilgileri</th>
-                                <th class="p-5 border-b">Mesai Kodu</th>
-                                <th class="p-5 border-b text-center">Durum</th>
-                            </tr>
+                            <tr><th class="p-4 border-b">Personel Bilgileri</th><th class="p-4 border-b">Mesai Kodu</th><th class="p-4 border-b text-center">İşlem</th></tr>
                         </thead>
                         <tbody id="personelTable" class="divide-y divide-gray-50"></tbody>
                     </table>
                 </div>
             </div>
 
-            <div id="calendarTab" class="hidden bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-black text-blue-900" id="calendarTitle">Takvim</h2>
-                    <div class="flex gap-3">
-                        <select id="calMonth" onchange="loadMonthlyCalendar()" class="p-3 border rounded-2xl text-xs font-bold outline-none bg-slate-50"></select>
-                        <select id="calYear" onchange="loadMonthlyCalendar()" class="p-3 border rounded-2xl text-xs font-bold outline-none bg-slate-50"></select>
+            <div id="calendarTab" class="hidden space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-600 p-6 rounded-3xl shadow-lg text-white">
+                        <p class="text-[10px] font-black uppercase opacity-60 tracking-widest">Toplam Gün</p>
+                        <h3 id="statDays" class="text-3xl font-bold">0</h3>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                        <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Brüt Çalışma</p>
+                        <h3 id="statGross" class="text-3xl font-bold text-gray-800">0 h</h3>
+                    </div>
+                    <div class="bg-green-500 p-6 rounded-3xl shadow-lg text-white">
+                        <p class="text-[10px] font-black uppercase opacity-80 tracking-widest">Sonuç Çalışma Süresi</p>
+                        <h3 id="statNet" class="text-3xl font-bold">0 h</h3>
                     </div>
                 </div>
-                <div class="calendar-grid bg-slate-200 gap-[1px] border border-slate-200 rounded-3xl overflow-hidden shadow-inner">
-                    <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">PZT</div>
-                    <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">SAL</div>
-                    <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">ÇAR</div>
-                    <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">PER</div>
-                    <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">CUM</div>
-                    <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-blue-400">CMT</div>
-                    <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-red-400">PAZ</div>
-                    <div id="calendarBody" class="contents"></div>
+
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-blue-900" id="calendarTitle">Takvim</h2>
+                        <div class="flex gap-2">
+                            <select id="calMonth" onchange="loadMonthlyCalendar()" class="p-2 border rounded-xl text-xs font-bold bg-slate-50 outline-none"></select>
+                            <select id="calYear" onchange="loadMonthlyCalendar()" class="p-2 border rounded-xl text-xs font-bold bg-slate-50 outline-none"></select>
+                        </div>
+                    </div>
+                    <div class="calendar-grid bg-slate-200 gap-[1px] border border-slate-200 rounded-3xl overflow-hidden shadow-inner">
+                        <div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">PZT</div><div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">SAL</div><div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">ÇAR</div><div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">PER</div><div class="bg-slate-100 p-3 text-center text-[10px] font-black text-slate-400">CUM</div><div class="bg-slate-100 p-3 text-center text-[10px] font-black text-blue-400">CMT</div><div class="bg-slate-100 p-3 text-center text-[10px] font-black text-red-400">PAZ</div>
+                        <div id="calendarBody" class="contents"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="personnelModal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-[32px] p-10 w-full max-w-md shadow-2xl">
-            <h2 id="modalTitle" class="text-2xl font-bold mb-8 text-gray-800">Personel Kartı</h2>
+    <div id="personnelModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-8 w-full max-w-md shadow-2xl">
+            <h2 id="modalTitle" class="text-2xl font-bold mb-6 text-gray-800">Personel Kartı</h2>
             <input type="hidden" id="editPersonId">
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Ad Soyad:</label>
-                    <input type="text" id="pName" class="w-full p-4 border border-gray-100 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-bold">
-                </div>
-                <div>
-                    <label class="block text-[10px] font-black text-gray-400 uppercase mb-2">Birim / Görev:</label>
-                    <input type="text" id="pUnit" class="w-full p-4 border border-gray-100 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-bold">
-                </div>
-                <div class="flex gap-4 pt-4">
-                    <button onclick="savePersonnel()" class="flex-1 bg-blue-600 text-white font-bold p-4 rounded-2xl shadow-lg hover:bg-blue-700 transition">Kaydet</button>
-                    <button onclick="closePersonnelModal()" class="flex-1 bg-slate-100 text-slate-400 font-bold p-4 rounded-2xl hover:bg-slate-200 transition">İptal</button>
+            <div class="space-y-4">
+                <input type="text" id="pName" placeholder="Ad Soyad" class="w-full p-4 border border-gray-100 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                <input type="text" id="pUnit" placeholder="Birim / Görev" class="w-full p-4 border border-gray-100 rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                <div class="flex gap-3 pt-4">
+                    <button onclick="savePersonnel()" class="flex-1 bg-blue-600 text-white font-bold p-4 rounded-2xl shadow-lg">Kaydet</button>
+                    <button onclick="closePersonnelModal()" class="flex-1 bg-slate-100 text-slate-400 font-bold p-4 rounded-2xl">İptal</button>
                 </div>
             </div>
         </div>
@@ -115,47 +110,38 @@
         let personnel = [];
         let savedShifts = {};
 
-        // Sayfa Başlangıcı: Ay ve Yıl listelerini doldur
         window.onload = () => {
-            const mSelect = document.getElementById('calMonth');
-            const ySelect = document.getElementById('calYear');
+            const mS = document.getElementById('calMonth');
+            const yS = document.getElementById('calYear');
             const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
-            months.forEach((m, i) => mSelect.innerHTML += `<option value="${(i+1).toString().padStart(2,'0')}">${m}</option>`);
+            months.forEach((m,i) => mS.innerHTML += `<option value="${(i+1).toString().padStart(2,'0')}">${m}</option>`);
             const curY = new Date().getFullYear();
-            for(let y=curY; y>=curY-1; y--) ySelect.innerHTML += `<option value="${y}">${y}</option>`;
-            mSelect.value = (new Date().getMonth()+1).toString().padStart(2,'0');
+            for(let y=curY; y>=curY-1; y--) yS.innerHTML += `<option value="${y}">${y}</option>`;
+            mS.value = (new Date().getMonth()+1).toString().padStart(2,'0');
         };
 
         async function handleLogin() {
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
             if(!user || !pass) return;
-            const btn = document.getElementById('loginBtn');
-            btn.innerText = "Bağlanıyor...";
-            try {
-                const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: user, password: pass })});
-                const result = await response.json();
-                if (result.status === "success") {
-                    currentUser = result.userName;
-                    document.getElementById('loginSection').classList.add('hidden');
-                    document.getElementById('mainSection').classList.remove('hidden');
-                    document.getElementById('welcomeMsg').innerText = "Sorumlu: " + currentUser;
-                    document.getElementById('mesaiTarihi').value = new Date().toISOString().split('T')[0];
-                    loadDataForDate();
-                } else {
-                    alert("Giriş Başarısız!");
-                    btn.innerText = "Giriş Yap";
-                }
-            } catch (e) { alert("Sistem Hatası!"); btn.innerText = "Giriş Yap"; }
+            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: user, password: pass })});
+            const res = await resp.json();
+            if (res.status === "success") {
+                currentUser = res.userName;
+                document.getElementById('loginSection').classList.add('hidden');
+                document.getElementById('mainSection').classList.remove('hidden');
+                document.getElementById('welcomeMsg').innerText = "Sorumlu: " + currentUser;
+                document.getElementById('mesaiTarihi').value = new Date().toISOString().split('T')[0];
+                loadDataForDate();
+            } else alert("Hatalı Giriş!");
         }
 
         async function loadDataForDate() {
-            const dateInput = document.getElementById('mesaiTarihi').value;
-            if(!dateInput) return;
-            const dateArr = dateInput.split('-');
-            const formattedDate = dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
-            const response = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getInitialData', targetDate: formattedDate })});
-            const data = await response.json();
+            const dI = document.getElementById('mesaiTarihi').value;
+            const dArr = dI.split('-');
+            const fD = dArr[2] + "." + dArr[1] + "." + dArr[0];
+            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getInitialData', targetDate: fD })});
+            const data = await resp.json();
             definitions = data.definitions;
             personnel = data.personnel;
             savedShifts = {};
@@ -170,35 +156,27 @@
                 const isSaved = initialCode !== "";
                 return `
                 <tr class="hover:bg-slate-50 transition group">
-                    <td class="p-5">
+                    <td class="p-4">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <div class="font-bold text-gray-800 tracking-tight text-sm">${p[1]}</div>
-                                <div class="text-[9px] text-gray-400 font-black uppercase tracking-widest mt-0.5">${p[2]}</div>
-                            </div>
+                            <div><div class="font-bold text-gray-800">${p[1]}</div><div class="text-[9px] text-gray-400 font-bold uppercase">${p[2]}</div></div>
                             <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button onclick="editPersonnel('${p[0]}','${p[1]}','${p[2]}')" class="p-2 text-blue-500 hover:bg-white rounded-xl shadow-sm border border-transparent hover:border-blue-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                                    </svg>
+                                <button onclick="editPersonnel('${p[0]}','${p[1]}','${p[2]}')" class="p-2 text-blue-500 hover:bg-blue-50 rounded-lg transition" title="Güncelle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
                                 </button>
-                                <button onclick="deletePersonnel('${p[0]}','${p[1]}')" class="p-2 text-red-500 hover:bg-white rounded-xl shadow-sm border border-transparent hover:border-red-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
+                                <button onclick="deletePersonnel('${p[0]}','${p[1]}')" class="p-2 text-red-500 hover:bg-red-50 rounded-lg transition" title="Sil">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                                 </button>
                             </div>
                         </div>
                     </td>
-                    <td class="p-5">
-                        <select id="code_${p[0]}" onchange="onCodeSelectChange('${p[0]}')" class="w-full p-2.5 border border-gray-100 rounded-xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-100 text-xs font-bold text-gray-600">
+                    <td class="p-4">
+                        <select id="code_${p[0]}" onchange="onCodeSelectChange('${p[0]}')" class="w-full p-2.5 border rounded-xl bg-white outline-none text-xs font-bold">
                             <option value="">Seçiniz...</option>
                             ${definitions.map(d => `<option value="${d[0]}" ${d[0] === initialCode ? 'selected' : ''}>${d[0]} (${d[2]}-${d[3]})</option>`).join('')}
                         </select>
                     </td>
-                    <td class="p-5 text-center">
-                        <button id="btn_${p[0]}" onclick="saveShift('${p[0]}', '${p[1]}')" 
-                            class="${isSaved ? 'bg-slate-200 text-slate-400 cursor-default' : 'bg-green-600 text-white shadow-md hover:bg-green-700'} px-6 py-2.5 rounded-xl font-bold transition text-[10px] uppercase tracking-widest">
+                    <td class="p-4 text-center">
+                        <button id="btn_${p[0]}" onclick="saveShift('${p[0]}', '${p[1]}')" class="${isSaved ? 'bg-slate-200 text-slate-500' : 'bg-green-600 text-white shadow-md hover:bg-green-700'} px-5 py-2.5 rounded-xl font-bold transition text-[10px] uppercase tracking-widest">
                             ${isSaved ? 'İşlendi' : 'Kaydet'}
                         </button>
                     </td>
@@ -206,29 +184,38 @@
             }).join('');
         }
 
-        // --- TAKVİM FONKSİYONLARI ---
         function switchTab(tab) {
-            const tE = document.getElementById('tabEntry');
-            const tC = document.getElementById('tabCalendar');
+            const tE = document.getElementById('tabEntry'), tC = document.getElementById('tabCalendar');
             if(tab === 'entry') {
                 document.getElementById('entryTab').classList.remove('hidden');
                 document.getElementById('calendarTab').classList.add('hidden');
-                tE.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm";
-                tC.className = "px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500";
+                tE.className = "px-5 py-2 rounded-xl font-bold text-xs bg-white shadow-sm";
+                tC.className = "px-5 py-2 rounded-xl font-bold text-xs text-slate-500";
             } else {
                 document.getElementById('entryTab').classList.add('hidden');
                 document.getElementById('calendarTab').classList.remove('hidden');
-                tC.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm";
-                tE.className = "px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500";
+                tC.className = "px-5 py-2 rounded-xl font-bold text-xs bg-white shadow-sm";
+                tE.className = "px-5 py-2 rounded-xl font-bold text-xs text-slate-500";
                 loadMonthlyCalendar();
             }
         }
 
         async function loadMonthlyCalendar() {
-            const m = document.getElementById('calMonth').value;
-            const y = document.getElementById('calYear').value;
+            const m = document.getElementById('calMonth').value, y = document.getElementById('calYear').value;
             const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getMonthlyShifts', month: m, year: y })});
             const data = await resp.json();
+            
+            // İSTATİSTİK HESAPLA
+            let totalG = 0, totalN = 0, totalD = new Set();
+            data.shifts.forEach(s => {
+                totalG += parseFloat(s[6]) || 0;
+                totalN += parseFloat(s[7]) || 0;
+                totalD.add(s[0]);
+            });
+            document.getElementById('statDays').innerText = totalD.size;
+            document.getElementById('statGross').innerText = totalG.toFixed(1) + " h";
+            document.getElementById('statNet').innerText = totalN.toFixed(1) + " h";
+
             renderCalendar(data.shifts, m, y);
         }
 
@@ -242,67 +229,57 @@
             for(let d=1; d<=daysInMonth; d++) {
                 const dateS = (d < 10 ? "0"+d : d) + "." + month + "." + year;
                 const daily = shifts.filter(s => s[0] === dateS);
-                let html = daily.map(s => `<div class="text-[8px] mb-0.5 p-1 bg-blue-50 text-blue-700 rounded-lg border border-blue-100 font-bold leading-none truncate" title="${s[2]}">${s[3]}: ${s[2].split(' ')[0]}</div>`).join('');
+                let html = daily.map(s => `<div class="text-[8px] mb-0.5 p-1 bg-blue-50 text-blue-700 rounded-lg border border-blue-100 font-bold truncate">${s[3]}: ${s[2].split(' ')[0]}</div>`).join('');
                 body.innerHTML += `<div class="day-cell bg-white p-2 overflow-y-auto"><div class="text-[10px] font-black text-slate-300 mb-1">${d}</div>${html}</div>`;
             }
         }
 
-        // --- PERSONEL İŞLEMLERİ ---
         function openPersonnelModal() {
             document.getElementById('modalTitle').innerText = "Yeni Personel";
             document.getElementById('editPersonId').value = ""; document.getElementById('pName').value = ""; document.getElementById('pUnit').value = "";
             document.getElementById('personnelModal').classList.remove('hidden');
         }
 
-        function closePersonnelModal() { document.getElementById('personnelModal').classList.add('hidden'); }
-
         function editPersonnel(id, name, unit) {
-            document.getElementById('modalTitle').innerText = "Personel Düzenle";
+            document.getElementById('modalTitle').innerText = "Personel Bilgisi";
             document.getElementById('editPersonId').value = id; document.getElementById('pName').value = name; document.getElementById('pUnit').value = unit;
             document.getElementById('personnelModal').classList.remove('hidden');
         }
 
+        function closePersonnelModal() { document.getElementById('personnelModal').classList.add('hidden'); }
+
         async function savePersonnel() {
-            const id = document.getElementById('editPersonId').value;
-            const action = id ? "updatePersonnel" : "addPersonnel";
-            const adSoyad = document.getElementById('pName').value;
-            const birim = document.getElementById('pUnit').value;
-            if(!adSoyad || !birim) return;
-            await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action, personelId: id, adSoyad, birim })});
+            const id = document.getElementById('editPersonId').value, a = id ? "updatePersonnel" : "addPersonnel";
+            const n = document.getElementById('pName').value, u = document.getElementById('pUnit').value;
+            if(!n || !u) return;
+            await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: a, personelId: id, adSoyad: n, birim: u })});
             closePersonnelModal(); loadDataForDate();
         }
 
         async function deletePersonnel(id, name) {
-            if (confirm(`${name} personeli silinecek. Emin misiniz?`)) {
-                if (confirm("Kayıtlar kalıcı olarak silinecek. Onaylıyor musunuz?")) {
-                    await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "deletePersonnel", personelId: id })});
-                    loadDataForDate();
-                }
+            if (confirm(`${name} silinecek. Emin misiniz?`)) {
+                await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "deletePersonnel", personelId: id })});
+                loadDataForDate();
             }
         }
 
-        // --- MESAİ KAYIT ---
         function onCodeSelectChange(pId) {
             const btn = document.getElementById('btn_' + pId);
             btn.innerText = "Kaydet";
-            btn.className = "bg-green-600 text-white shadow-md hover:bg-green-700 px-6 py-2.5 rounded-xl font-bold transition text-[10px] uppercase tracking-widest cursor-pointer";
+            btn.className = "bg-green-600 text-white shadow-md hover:bg-green-700 px-5 py-2.5 rounded-xl font-bold transition text-[10px] uppercase tracking-widest cursor-pointer";
         }
 
         async function saveShift(pId, pName) {
-            const dateInput = document.getElementById('mesaiTarihi').value;
-            const code = document.getElementById('code_' + pId).value;
-            const btn = document.getElementById('btn_' + pId);
-            if (!dateInput || !code || btn.innerText === "İşlendi") return;
-            const dateArr = dateInput.split('-');
-            const formattedDate = dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
+            const dateI = document.getElementById('mesaiTarihi').value, code = document.getElementById('code_' + pId).value, btn = document.getElementById('btn_' + pId);
+            if (!dateI || !code || btn.innerText === "İşlendi") return;
+            const dateArr = dateI.split('-'), fD = dateArr[2] + "." + dateArr[1] + "." + dateArr[0];
             const def = definitions.find(d => d[0] === code);
-            btn.innerText = "Yükleniyor";
-            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'saveShift', tarih: formattedDate, personelId: pId, adSoyad: pName, mesaiKodu: code, baslangic: def[2], bitis: def[3], kaydeden: currentUser })});
+            btn.innerText = "İşleniyor";
+            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'saveShift', tarih: fD, personelId: pId, adSoyad: pName, mesaiKodu: code, baslangic: def[2], bitis: def[3], kaydeden: currentUser })});
             const res = await resp.json();
             if(res.status === "success") {
-                savedShifts[pId] = code;
-                btn.innerText = "İşlendi";
-                btn.className = "bg-slate-200 text-slate-400 px-6 py-2.5 rounded-xl font-bold transition text-[10px] uppercase tracking-widest cursor-default";
+                savedShifts[pId] = code; btn.innerText = "İşlendi";
+                btn.className = "bg-slate-200 text-slate-500 px-5 py-2.5 rounded-xl font-bold transition text-[10px] uppercase tracking-widest cursor-default";
             }
         }
     </script>
