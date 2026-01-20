@@ -13,41 +13,47 @@
 <body class="bg-slate-100 min-h-screen font-sans">
 
     <div id="loginSection" class="flex items-center justify-center min-h-screen">
-        <div class="bg-white p-8 rounded-3xl shadow-xl w-full max-w-sm border">
-            <h2 class="text-2xl font-bold mb-6 text-center text-blue-900 tracking-tight">Sorumlu Girişi</h2>
-            <input type="text" id="username" placeholder="Kullanıcı" class="w-full p-4 border rounded-2xl mb-4 focus:ring-2 focus:ring-blue-500 outline-none">
-            <input type="password" id="password" placeholder="Şifre" class="w-full p-4 border rounded-2xl mb-6 focus:ring-2 focus:ring-blue-500 outline-none">
-            <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 text-white font-bold p-4 rounded-2xl hover:bg-blue-700 shadow-lg">Giriş Yap</button>
+        <div class="bg-white p-8 rounded-[40px] shadow-2xl w-full max-w-sm border border-gray-100">
+            <h2 class="text-3xl font-black mb-8 text-center text-blue-900 tracking-tighter uppercase">Nişantaşı</h2>
+            <div class="space-y-4">
+                <input type="text" id="username" placeholder="Kullanıcı" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                <input type="password" id="password" placeholder="Şifre" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 text-white font-black p-4 rounded-2xl hover:bg-blue-700 shadow-xl transition-all">SİSTEME GİRİŞ</button>
+            </div>
         </div>
     </div>
 
     <div id="mainSection" class="hidden p-4 md:p-8">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6 bg-white p-6 rounded-3xl shadow-sm gap-4 border border-gray-100">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-[32px] shadow-sm gap-4 border border-gray-100">
                 <div class="flex items-center gap-6">
                     <div>
-                        <h1 class="text-xl font-black text-gray-800" id="welcomeMsg">Hoş Geldiniz</h1>
-                        <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Nişantaşı Mesai v7.0</p>
+                        <h1 class="text-xl font-black text-gray-800" id="welcomeMsg">Yükleniyor...</h1>
+                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Yönetim Paneli v8.0</p>
                     </div>
                     <nav class="flex bg-slate-100 p-1.5 rounded-2xl">
                         <button onclick="switchTab('entry')" id="tabEntry" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm transition">Kayıt Ekranı</button>
                         <button onclick="switchTab('calendar')" id="tabCalendar" class="px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition">Aylık Rapor</button>
                     </nav>
                 </div>
-                <div class="flex gap-2">
+                <div class="flex gap-3">
+                    <button onclick="openDefManager()" class="bg-slate-800 text-white px-5 py-2.5 rounded-2xl font-bold text-xs shadow-lg hover:bg-black transition flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                        Mesai Kodları
+                    </button>
                     <button onclick="openPersonnelModal()" class="bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-bold text-xs shadow-lg hover:bg-blue-700 transition">+ Personel</button>
-                    <button onclick="location.reload()" class="bg-red-50 text-red-600 px-5 py-2.5 rounded-2xl font-bold text-xs">Çıkış</button>
+                    <button onclick="location.reload()" class="bg-red-50 text-red-600 px-5 py-2.5 rounded-2xl font-bold text-xs hover:bg-red-100 transition">Çıkış</button>
                 </div>
             </div>
 
-            <div id="entryTab" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+            <div id="entryTab" class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
                 <div class="mb-8 max-w-xs">
-                    <label class="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Tarih Seçin:</label>
-                    <input type="date" id="mesaiTarihi" onchange="loadDataForDate()" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-bold">
+                    <label class="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Vardiya Tarihi:</label>
+                    <input type="date" id="mesaiTarihi" onchange="loadDataForDate()" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-bold text-gray-700 shadow-inner">
                 </div>
-                <div class="overflow-x-auto rounded-2xl border border-gray-100">
+                <div class="overflow-x-auto rounded-3xl border border-gray-100">
                     <table class="w-full text-left">
-                        <thead class="bg-slate-50 text-gray-500 text-[10px] uppercase font-bold tracking-widest">
+                        <thead class="bg-slate-50 text-gray-400 text-[10px] uppercase font-black tracking-widest">
                             <tr><th class="p-5 border-b">Personel Bilgileri</th><th class="p-5 border-b">Mesai Kodu</th><th class="p-5 border-b text-center">İşlem</th></tr>
                         </thead>
                         <tbody id="personelTable" class="divide-y divide-gray-50"></tbody>
@@ -55,25 +61,22 @@
                 </div>
             </div>
 
-            <div id="calendarTab" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                    <div class="flex justify-between items-center mb-6 text-blue-900">
-                        <h2 class="text-xl font-black uppercase tracking-tight">Personel Hakediş Özeti</h2>
-                        <div class="flex gap-2">
-                            <select id="calMonth" onchange="loadMonthlyCalendar()" class="p-2 border rounded-xl text-xs font-bold bg-slate-50 outline-none"></select>
-                            <select id="calYear" onchange="loadMonthlyCalendar()" class="p-2 border rounded-xl text-xs font-bold bg-slate-50 outline-none"></select>
+            <div id="calendarTab" class="hidden space-y-8">
+                <div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-2xl font-black text-blue-900 tracking-tighter uppercase">Personel Hakediş Özeti</h2>
+                        <div class="flex gap-3">
+                            <select id="calMonth" onchange="loadMonthlyCalendar()" class="p-3 border rounded-2xl text-xs font-bold bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"></select>
+                            <select id="calYear" onchange="loadMonthlyCalendar()" class="p-3 border rounded-2xl text-xs font-bold bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500"></select>
                         </div>
                     </div>
-                    <div class="overflow-x-auto rounded-2xl border border-gray-100">
+                    <div class="overflow-x-auto rounded-3xl border border-gray-100">
                         <table class="w-full text-left">
                             <thead class="bg-slate-50 text-[9px] text-gray-400 uppercase font-black tracking-widest">
                                 <tr>
-                                    <th class="p-4 border-b">Personel Adı</th>
-                                    <th class="p-4 border-b">Toplam Gün</th>
-                                    <th class="p-4 border-b text-blue-600">Brüt Saat</th>
-                                    <th class="p-4 border-b text-amber-600">Toplam Mola</th>
-                                    <th class="p-4 border-b text-green-600">Sonuç Saat</th>
-                                    <th class="p-4 border-b">Hedef</th>
+                                    <th class="p-4 border-b">Personel Adı</th><th class="p-4 border-b">Toplam Gün</th>
+                                    <th class="p-4 border-b text-blue-600">Brüt Saat</th><th class="p-4 border-b text-amber-600">Mola</th>
+                                    <th class="p-4 border-b text-green-600">Sonuç Saat</th><th class="p-4 border-b">Hedef</th>
                                     <th class="p-4 border-b text-center">Fark (+/-)</th>
                                 </tr>
                             </thead>
@@ -82,10 +85,10 @@
                     </div>
                 </div>
 
-                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-                    <h2 class="text-xl font-black text-gray-400 mb-6 uppercase tracking-widest text-center" id="calendarTitle">Takvim</h2>
-                    <div class="calendar-grid bg-slate-200 gap-[1px] border border-slate-200 rounded-3xl overflow-hidden shadow-inner">
-                        <div class="bg-slate-50 p-3 text-center text-[10px] font-black text-slate-400 uppercase">Pzt</div><div class="bg-slate-50 p-3 text-center text-[10px] font-black text-slate-400">Sal</div><div class="bg-slate-50 p-3 text-center text-[10px] font-black text-slate-400">Çar</div><div class="bg-slate-50 p-3 text-center text-[10px] font-black text-slate-400">Per</div><div class="bg-slate-50 p-3 text-center text-[10px] font-black text-slate-400">Cum</div><div class="bg-slate-50 p-3 text-center text-[10px] font-black text-blue-400">Cmt</div><div class="bg-slate-50 p-3 text-center text-[10px] font-black text-red-400">Paz</div>
+                <div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100 overflow-hidden">
+                    <h2 class="text-center text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] mb-8">Aylık Görsel Takvim</h2>
+                    <div class="calendar-grid bg-slate-200 gap-[1px] border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
+                        <div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">PZT</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">SAL</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">ÇAR</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">PER</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">CUM</div><div class="bg-white p-3 text-center text-[10px] font-black text-blue-400">CMT</div><div class="bg-white p-3 text-center text-[10px] font-black text-red-400">PAZ</div>
                         <div id="calendarBody" class="contents"></div>
                     </div>
                 </div>
@@ -93,17 +96,52 @@
         </div>
     </div>
 
-    <div id="personnelModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-[32px] p-10 w-full max-w-md shadow-2xl">
-            <h2 id="modalTitle" class="text-2xl font-bold mb-8 text-gray-800 text-center">Personel Kartı</h2>
+    <div id="defManagerModal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-[40px] p-10 w-full max-w-4xl shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-black text-gray-800 tracking-tighter uppercase">Mesai Kodlarını Yönet</h2>
+                <button onclick="openDefForm()" class="bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-xs shadow-lg hover:bg-green-700">+ Yeni Kod Ekle</button>
+            </div>
+            
+            <div id="defForm" class="hidden bg-slate-50 p-6 rounded-3xl mb-8 border border-slate-200 space-y-4">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                    <input type="text" id="defKod" placeholder="Kod (Örn: HG)" class="p-3 border rounded-xl outline-none font-bold text-sm">
+                    <input type="text" id="defDesc" placeholder="Açıklama" class="p-3 border rounded-xl outline-none font-bold text-sm">
+                    <input type="text" id="defStart" placeholder="Başlangıç (08:00)" class="p-3 border rounded-xl outline-none font-bold text-sm">
+                    <input type="text" id="defEnd" placeholder="Bitiş (20:00)" class="p-3 border rounded-xl outline-none font-bold text-sm">
+                    <input type="number" id="defMola" placeholder="Mola (Dk)" class="p-3 border rounded-xl outline-none font-bold text-sm">
+                </div>
+                <div class="flex justify-end gap-2">
+                    <button onclick="saveDefinition()" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold text-xs">Kaydet</button>
+                    <button onclick="closeDefForm()" class="bg-gray-200 text-gray-600 px-6 py-2 rounded-xl font-bold text-xs">Vazgeç</button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-3xl border border-gray-100">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-slate-50 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+                        <tr><th class="p-4">Kod</th><th class="p-4">Açıklama</th><th class="p-4">Saatler</th><th class="p-4">Mola</th><th class="p-4 text-center">İşlem</th></tr>
+                    </thead>
+                    <tbody id="defTableBody" class="font-bold divide-y divide-gray-50"></tbody>
+                </table>
+            </div>
+            <div class="mt-8 flex justify-center">
+                <button onclick="closeDefManager()" class="bg-slate-100 text-slate-500 font-bold px-10 py-3 rounded-2xl hover:bg-slate-200 transition">KAPAT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="personnelModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-[40px] p-10 w-full max-w-md shadow-2xl">
+            <h2 id="modalTitle" class="text-2xl font-black mb-8 text-gray-800 text-center tracking-tighter uppercase">Personel Kayıt</h2>
             <input type="hidden" id="editPersonId">
             <div class="space-y-4">
                 <input type="text" id="pName" placeholder="Ad Soyad" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none font-bold">
                 <input type="text" id="pUnit" placeholder="Birim / Görev" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none font-bold">
                 <input type="number" id="pTarget" placeholder="Hedef Mesai (Örn: 189)" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none font-bold">
                 <div class="flex gap-4 pt-4">
-                    <button onclick="savePersonnel()" class="flex-1 bg-blue-600 text-white font-bold p-4 rounded-2xl shadow-lg hover:bg-blue-700 transition">Kaydet</button>
-                    <button onclick="closePersonnelModal()" class="flex-1 bg-slate-100 text-slate-400 font-bold p-4 rounded-2xl hover:bg-slate-200 transition">İptal</button>
+                    <button onclick="savePersonnel()" class="flex-1 bg-blue-600 text-white font-black p-4 rounded-2xl shadow-xl hover:bg-blue-700 transition">KAYDET</button>
+                    <button onclick="closePersonnelModal()" class="flex-1 bg-slate-100 text-slate-400 font-bold p-4 rounded-2xl">İPTAL</button>
                 </div>
             </div>
         </div>
@@ -134,12 +172,12 @@
                 document.getElementById('welcomeMsg').innerText = "Sorumlu: " + currentUser;
                 document.getElementById('mesaiTarihi').value = new Date().toISOString().split('T')[0];
                 loadDataForDate();
-            } else alert("Giriş Bilgileri Yanlış!");
+            } else alert("Hatalı Giriş!");
         }
 
         async function loadDataForDate() {
-            const dI = document.getElementById('mesaiTarihi').value;
-            const dArr = dI.split('-'), fD = dArr[2] + "." + dArr[1] + "." + dArr[0];
+            const dInput = document.getElementById('mesaiTarihi').value;
+            const dArr = dInput.split('-'), fD = dArr[2] + "." + dArr[1] + "." + dArr[0];
             const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getInitialData', targetDate: fD })});
             const data = await resp.json();
             definitions = data.definitions; personnel = data.personnel;
@@ -153,16 +191,16 @@
                 const initCode = savedShifts[p[0]] || "", isSaved = initCode !== "";
                 return `
                 <tr class="hover:bg-slate-50 transition group font-bold">
-                    <td class="p-5"><div><div class="text-gray-800 text-sm">${p[1]}</div><div class="text-[9px] text-gray-400 font-black uppercase tracking-widest">${p[2]}</div></div></td>
+                    <td class="p-5"><div><div class="text-gray-800 text-sm tracking-tight">${p[1]}</div><div class="text-[9px] text-gray-400 font-black uppercase tracking-widest">${p[2]}</div></div></td>
                     <td class="p-5">
-                        <select id="code_${p[0]}" onchange="onCodeSelectChange('${p[0]}')" class="w-full p-2.5 border rounded-xl bg-slate-50 outline-none text-xs focus:ring-2 focus:ring-blue-100">
+                        <select id="code_${p[0]}" onchange="onCodeSelectChange('${p[0]}')" class="w-full p-3 border rounded-2xl bg-slate-50 outline-none text-xs focus:ring-2 focus:ring-blue-100">
                             <option value="">Seçiniz...</option>
                             ${definitions.map(d => `<option value="${d[0]}" ${d[0] === initCode ? 'selected' : ''}>${d[0]}</option>`).join('')}
                         </select>
                     </td>
                     <td class="p-5 text-center">
-                        <button id="btn_${p[0]}" onclick="saveShift('${p[0]}', '${p[1]}')" class="${isSaved ? 'bg-slate-200 text-slate-400' : 'bg-green-600 text-white shadow-md'} px-6 py-2.5 rounded-xl font-bold text-[10px] uppercase tracking-widest transition">
-                            ${isSaved ? 'İşlendi' : 'Kaydet'}
+                        <button id="btn_${p[0]}" onclick="saveShift('${p[0]}', '${p[1]}')" class="${isSaved ? 'bg-slate-200 text-slate-400' : 'bg-green-600 text-white shadow-xl'} px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all">
+                            ${isSaved ? 'İŞLENDİ' : 'KAYDET'}
                         </button>
                     </td>
                 </tr>`;
@@ -173,12 +211,12 @@
             const tE = document.getElementById('tabEntry'), tC = document.getElementById('tabCalendar');
             if(tab === 'entry') {
                 document.getElementById('entryTab').classList.remove('hidden'); document.getElementById('calendarTab').classList.add('hidden');
-                tE.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm transition";
-                tC.className = "px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition";
+                tE.className = "px-6 py-3 rounded-xl font-black text-xs bg-white shadow-md transition";
+                tC.className = "px-6 py-3 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition";
             } else {
                 document.getElementById('entryTab').classList.add('hidden'); document.getElementById('calendarTab').classList.remove('hidden');
-                tC.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm transition";
-                tE.className = "px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition";
+                tC.className = "px-6 py-3 rounded-xl font-black text-xs bg-white shadow-md transition";
+                tE.className = "px-6 py-3 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition";
                 loadMonthlyCalendar();
             }
         }
@@ -188,32 +226,24 @@
             const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getMonthlyShifts', month: m, year: y })});
             const data = await resp.json();
             
-            // AY ÖZET TABLOSUNU DOLDUR
             const summaryTable = document.getElementById('summaryTableBody');
             summaryTable.innerHTML = personnel.map(p => {
                 const pShifts = data.shifts.filter(s => s[1] == p[0]);
                 let totalBrut = 0, totalMola = 0, totalNet = 0, activeDays = new Set();
                 pShifts.forEach(s => {
-                    totalBrut += parseFloat(s[6]) || 0;
-                    totalMola += parseFloat(s[7]) || 0;
-                    totalNet += parseFloat(s[8]) || 0;
-                    activeDays.add(s[0]);
+                    totalBrut += parseFloat(s[6]) || 0; totalMola += parseFloat(s[7]) || 0;
+                    totalNet += parseFloat(s[8]) || 0; activeDays.add(s[0]);
                 });
                 const target = parseFloat(p[3]) || 189;
                 const diff = totalNet - target;
-                
                 return `
                 <tr class="hover:bg-gray-50 transition">
-                    <td class="p-4 text-gray-800 font-bold">${p[1]}</td>
-                    <td class="p-4">${activeDays.size} Gün</td>
-                    <td class="p-4 text-blue-600 font-bold">${totalBrut.toFixed(1)} h</td>
-                    <td class="p-4 text-amber-600 font-bold">${totalMola.toFixed(1)} h</td>
-                    <td class="p-4 text-green-600 font-bold">${totalNet.toFixed(1)} h</td>
-                    <td class="p-4 text-gray-400 font-bold">${target} h</td>
-                    <td class="p-4 text-center ${diff < 0 ? 'text-red-500' : 'text-green-600'} font-bold">${(diff >= 0 ? "+" : "") + diff.toFixed(1)} h</td>
+                    <td class="p-4 text-gray-800">${p[1]}</td><td class="p-4">${activeDays.size} Gün</td>
+                    <td class="p-4 text-blue-600 font-black">${totalBrut.toFixed(1)} h</td><td class="p-4 text-amber-600 font-black">${totalMola.toFixed(1)} h</td>
+                    <td class="p-4 text-green-600 font-black">${totalNet.toFixed(1)} h</td><td class="p-4 text-gray-400 font-black">${target} h</td>
+                    <td class="p-4 text-center ${diff < 0 ? 'text-red-500' : 'text-green-600'} font-black text-[14px] tracking-tight">${(diff >= 0 ? "+" : "") + diff.toFixed(1)} h</td>
                 </tr>`;
             }).join('');
-
             renderCalendar(data.shifts, m, y);
         }
 
@@ -230,40 +260,73 @@
             }
         }
 
-        function openPersonnelModal() {
-            document.getElementById('modalTitle').innerText = "Yeni Personel";
-            document.getElementById('editPersonId').value = ""; document.getElementById('pName').value = ""; document.getElementById('pUnit').value = ""; document.getElementById('pTarget').value = "189";
-            document.getElementById('personnelModal').classList.remove('hidden');
+        // TANIM YÖNETİMİ (YENİ)
+        function openDefManager() {
+            document.getElementById('defManagerModal').classList.remove('hidden');
+            renderDefTable();
+        }
+        function closeDefManager() { document.getElementById('defManagerModal').classList.add('hidden'); }
+        function openDefForm() { document.getElementById('defForm').classList.remove('hidden'); }
+        function closeDefForm() { document.getElementById('defForm').classList.add('hidden'); }
+
+        function renderDefTable() {
+            const body = document.getElementById('defTableBody');
+            body.innerHTML = definitions.map(d => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="p-4">${d[0]}</td><td class="p-4">${d[1]}</td>
+                    <td class="p-4 text-gray-400">${d[2]}-${d[3]}</td><td class="p-4">${d[4]} dk</td>
+                    <td class="p-4 text-center">
+                        <div class="flex justify-center gap-2">
+                            <button onclick="editDef('${d[0]}','${d[1]}','${d[2]}','${d[3]}','${d[4]}')" class="text-blue-500 hover:bg-blue-50 p-2 rounded-lg transition">Düzenle</button>
+                            <button onclick="deleteDef('${d[0]}')" class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition">Sil</button>
+                        </div>
+                    </td>
+                </tr>`).join('');
         }
 
-        function editPersonnel(id, name, unit, target) {
-            document.getElementById('modalTitle').innerText = "Personel Düzenle";
-            document.getElementById('editPersonId').value = id; document.getElementById('pName').value = name; document.getElementById('pUnit').value = unit; document.getElementById('pTarget').value = target;
-            document.getElementById('personnelModal').classList.remove('hidden');
+        async function saveDefinition() {
+            const data = {
+                action: 'saveDefinition', kisaKod: document.getElementById('defKod').value,
+                aciklama: document.getElementById('defDesc').value, baslangic: document.getElementById('defStart').value,
+                bitis: document.getElementById('defEnd').value, mola: document.getElementById('defMola').value
+            };
+            await fetch(API_URL, { method: 'POST', body: JSON.stringify(data)});
+            loadDataForDate(); closeDefForm();
         }
 
+        async function deleteDef(kod) {
+            if(confirm(kod + " kodunu silmek istediğinizden emin misiniz?")) {
+                await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDefinition', kisaKod: kod })});
+                loadDataForDate();
+            }
+        }
+
+        function editDef(kod, desc, start, end, mola) {
+            document.getElementById('defKod').value = kod; document.getElementById('defDesc').value = desc;
+            document.getElementById('defStart').value = start; document.getElementById('defEnd').value = end;
+            document.getElementById('defMola').value = mola; openDefForm();
+        }
+
+        // PERSONEL VE MESAİ İŞLEMLERİ (Önceki Sürümlerle Aynı)
+        function openPersonnelModal() { document.getElementById('personnelModal').classList.remove('hidden'); document.getElementById('pTarget').value = "189"; }
         function closePersonnelModal() { document.getElementById('personnelModal').classList.add('hidden'); }
-
         async function savePersonnel() {
             const id = document.getElementById('editPersonId').value, act = id ? "updatePersonnel" : "addPersonnel";
             const n = document.getElementById('pName').value, u = document.getElementById('pUnit').value, t = document.getElementById('pTarget').value;
-            if(!n || !u) return;
             await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: act, personelId: id, adSoyad: n, birim: u, hedefMesai: t })});
             closePersonnelModal(); loadDataForDate();
         }
-
         async function saveShift(pId, pName) {
             const dI = document.getElementById('mesaiTarihi').value, code = document.getElementById('code_' + pId).value, btn = document.getElementById('btn_' + pId);
-            if (!dI || !code || btn.innerText === "İşlendi") return;
+            if (!dI || !code || btn.innerText === "İŞLENDİ") return;
             const dArr = dI.split('-'), fD = dArr[2] + "." + dArr[1] + "." + dArr[0];
             const def = definitions.find(d => d[0] === code);
-            btn.innerText = "GÖNDERİLİYOR...";
+            btn.innerText = "...";
             const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'saveShift', tarih: fD, personelId: pId, adSoyad: pName, mesaiKodu: code, baslangic: def[2], bitis: def[3], kaydeden: currentUser })});
             const res = await resp.json();
-            if(res.status === "success") { savedShifts[pId] = code; btn.innerText = "İşlendi"; btn.className = "bg-slate-200 text-slate-400 px-6 py-2.5 rounded-xl font-bold transition text-[10px] uppercase cursor-default"; }
+            if(res.status === "success") { savedShifts[pId] = code; btn.innerText = "İŞLENDİ"; btn.className = "bg-slate-200 text-slate-400 px-8 py-3 rounded-2xl font-black text-[10px] uppercase cursor-default"; }
         }
-
-        function onCodeSelectChange(pId) { const btn = document.getElementById('btn_' + pId); btn.innerText = "Kaydet"; btn.className = "bg-green-600 text-white shadow-lg px-6 py-2.5 rounded-xl font-bold transition text-[10px] uppercase cursor-pointer"; }
+        function onCodeSelectChange(pId) { const btn = document.getElementById('btn_' + pId); btn.innerText = "KAYDET"; btn.className = "bg-green-600 text-white shadow-xl px-8 py-3 rounded-2xl font-black text-[10px] uppercase cursor-pointer"; }
     </script>
 </body>
 </html>
