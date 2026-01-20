@@ -51,7 +51,6 @@
             margin-bottom: 6px;
         }
         .shift-badge {
-            background: #3b82f6;
             color: white;
             font-size: 8px;
             font-weight: 700;
@@ -64,12 +63,53 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-        .shift-badge:hover {
-            background: #1d4ed8;
-            transform: scale(1.05);
             transition: all 0.2s;
         }
+        .shift-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        /* Mesai Kodu Renkleri */
+        .shift-HG { background: #3b82f6; }
+        .shift-HG:hover { background: #2563eb; }
+        
+        .shift-HN { background: #8b5cf6; }
+        .shift-HN:hover { background: #7c3aed; }
+        
+        .shift-G { background: #10b981; }
+        .shift-G:hover { background: #059669; }
+        
+        .shift-GC { background: #f59e0b; }
+        .shift-GC:hover { background: #d97706; }
+        
+        .shift-YG { background: #f97316; }
+        .shift-YG:hover { background: #ea580c; }
+        
+        .shift-RP { background: #ef4444; }
+        .shift-RP:hover { background: #dc2626; }
+        
+        .shift-SPV { background: #a855f7; }
+        .shift-SPV:hover { background: #9333ea; }
+        
+        .shift-N { background: #1e293b; }
+        .shift-N:hover { background: #0f172a; }
+        
+        .shift-YI { background: #06b6d4; }
+        .shift-YI:hover { background: #0891b2; }
+        
+        .shift-RT { background: #ec4899; }
+        .shift-RT:hover { background: #db2777; }
+        
+        .shift-DGM { background: #84cc16; }
+        .shift-DGM:hover { background: #65a30d; }
+        
+        .shift-EI { background: #eab308; }
+        .shift-EI:hover { background: #ca8a04; }
+        
+        .shift-OI { background: #64748b; }
+        .shift-OI:hover { background: #475569; }
+        
         .toast {
             position: fixed;
             top: 24px;
@@ -195,6 +235,59 @@
             max-width: 400px;
             box-shadow: 0 10px 40px rgba(37, 99, 235, 0.3);
         }
+        
+        /* Select Option Renkleri */
+        .select-option-HG { background-color: #3b82f6; color: white; }
+        .select-option-HN { background-color: #8b5cf6; color: white; }
+        .select-option-G { background-color: #10b981; color: white; }
+        .select-option-GC { background-color: #f59e0b; color: white; }
+        .select-option-YG { background-color: #f97316; color: white; }
+        .select-option-RP { background-color: #ef4444; color: white; }
+        .select-option-SPV { background-color: #a855f7; color: white; }
+        .select-option-N { background-color: #1e293b; color: white; }
+        .select-option-YI { background-color: #06b6d4; color: white; }
+        .select-option-RT { background-color: #ec4899; color: white; }
+        .select-option-DGM { background-color: #84cc16; color: white; }
+        .select-option-EI { background-color: #eab308; color: white; }
+        .select-option-OI { background-color: #64748b; color: white; }
+        
+        /* Seçili Select'e Renk */
+        .input-field.selected-HG { border-color: #3b82f6; background: #dbeafe; }
+        .input-field.selected-HN { border-color: #8b5cf6; background: #ede9fe; }
+        .input-field.selected-G { border-color: #10b981; background: #d1fae5; }
+        .input-field.selected-GC { border-color: #f59e0b; background: #fef3c7; }
+        .input-field.selected-YG { border-color: #f97316; background: #ffedd5; }
+        .input-field.selected-RP { border-color: #ef4444; background: #fee2e2; }
+        .input-field.selected-SPV { border-color: #a855f7; background: #f3e8ff; }
+        .input-field.selected-N { border-color: #1e293b; background: #f1f5f9; }
+        .input-field.selected-YI { border-color: #06b6d4; background: #cffafe; }
+        .input-field.selected-RT { border-color: #ec4899; background: #fce7f3; }
+        .input-field.selected-DGM { border-color: #84cc16; background: #ecfccb; }
+        .input-field.selected-EI { border-color: #eab308; background: #fef9c3; }
+        .input-field.selected-OI { border-color: #64748b; background: #f1f5f9; }
+        
+        /* Renk Açıklama Kutusu */
+        .color-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .color-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -263,6 +356,42 @@
                     </button>
                 </div>
 
+                <!-- RENK LEJANTı -->
+                <div class="color-legend">
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #3b82f6;"></div>
+                        <span>HG - Hemşire Gündüz</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #8b5cf6;"></div>
+                        <span>HN - Hemşire Gece</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #10b981;"></div>
+                        <span>G - Gündüz Mesai</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #f59e0b;"></div>
+                        <span>GC - Gece Mesai</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #f97316;"></div>
+                        <span>YG - Yarım Gün</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #ef4444;"></div>
+                        <span>RP - Raporlu</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #a855f7;"></div>
+                        <span>SPV - Süpervizör</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #1e293b;"></div>
+                        <span>N - Nöbet (24 Saat)</span>
+                    </div>
+                </div>
+
                 <div class="space-y-4 mb-8" id="personelListContainer"></div>
 
                 <!-- TOPLU KAYDET BUTONU -->
@@ -281,6 +410,42 @@
                             class="input-field w-auto px-4 py-2 text-sm font-bold"></select>
                         <select id="calYear" onchange="loadMonthlyCalendar()" 
                             class="input-field w-auto px-4 py-2 text-sm font-bold"></select>
+                    </div>
+                </div>
+
+                <!-- RENK LEJANTı (RAPOR) -->
+                <div class="color-legend">
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #3b82f6;"></div>
+                        <span>HG</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #8b5cf6;"></div>
+                        <span>HN</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #10b981;"></div>
+                        <span>G</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #f59e0b;"></div>
+                        <span>GC</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #f97316;"></div>
+                        <span>YG</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #ef4444;"></div>
+                        <span>RP</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #a855f7;"></div>
+                        <span>SPV</span>
+                    </div>
+                    <div class="color-legend-item">
+                        <div class="color-box" style="background: #1e293b;"></div>
+                        <span>N</span>
                     </div>
                 </div>
 
@@ -330,6 +495,26 @@
         const API_URL = "https://script.google.com/macros/s/AKfycbzsqLhX0aZ23cONr9I5AFpjQ3mXNe4APpK5KF2k5ShDc-R9FExe4UdUMe6Qde2lgJnW5g/exec";
         
         let currentUser = "", definitions = [], personnel = [], savedShifts = {}, currentShiftsData = [];
+
+        // Mesai kodu renk haritası
+        const shiftColors = {
+            'HG': '#3b82f6',
+            'HN': '#8b5cf6',
+            'G': '#10b981',
+            'GC': '#f59e0b',
+            'YG': '#f97316',
+            'RP': '#ef4444',
+            'SPV': '#a855f7',
+            'N': '#1e293b',
+            'YI': '#06b6d4',
+            'Yİ': '#06b6d4',
+            'RT': '#ec4899',
+            'DGM': '#84cc16',
+            'EI': '#eab308',
+            'Eİ': '#eab308',
+            'OI': '#64748b',
+            'Öİ': '#64748b'
+        };
 
         function setLoad(val) { 
             document.getElementById('spinner').classList.toggle('hidden', !val); 
@@ -417,6 +602,7 @@
             container.innerHTML = personnel.map(p => {
                 const code = savedShifts[p[0]] || "";
                 const isSaved = code !== "";
+                const colorClass = code ? `selected-${code}` : '';
                 
                 return `
                 <div class="bg-white border-2 border-gray-200 rounded-xl p-6 hover:border-blue-300 transition">
@@ -436,8 +622,8 @@
                             <p class="text-sm font-semibold text-slate-500">${p[2]}</p>
                         </div>
                         <div class="flex items-center gap-3">
-                            <select id="code_${p[0]}" onchange="updateBulkSaveButton()" 
-                                class="input-field w-full md:w-64 py-3"
+                            <select id="code_${p[0]}" onchange="updateSelectColor('${p[0]}'); updateBulkSaveButton();" 
+                                class="input-field w-full md:w-64 py-3 ${colorClass}"
                                 ${isSaved ? 'disabled' : ''}>
                                 <option value="">Vardiya Seçiniz</option>
                                 ${definitions.map(d => `<option value="${d[0]}" ${d[0] === code ? 'selected' : ''}>${d[0]} - ${d[1]} (${d[2]}-${d[3]})</option>`).join('')}
@@ -455,6 +641,19 @@
                     </div>
                 </div>`;
             }).join('');
+        }
+
+        function updateSelectColor(pId) {
+            const select = document.getElementById('code_' + pId);
+            if(!select) return;
+            
+            // Tüm renk sınıflarını kaldır
+            select.className = select.className.split(' ').filter(c => !c.startsWith('selected-')).join(' ');
+            
+            // Seçili değere göre renk ekle
+            if(select.value) {
+                select.classList.add('selected-' + select.value);
+            }
         }
 
         function updateBulkSaveButton() {
@@ -601,9 +800,12 @@
                 <div class="space-y-3 max-h-96 overflow-y-auto custom-scroll">
                     ${definitions.map(d => `
                         <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition">
-                            <div>
-                                <span class="text-base font-bold text-slate-900 mr-3">${d[0]}</span>
-                                <span class="text-sm font-semibold text-slate-500">${d[1]} (${d[2]}-${d[3]})</span>
+                            <div class="flex items-center gap-3">
+                                <div class="w-6 h-6 rounded" style="background: ${shiftColors[d[0]] || '#64748b'};"></div>
+                                <div>
+                                    <span class="text-base font-bold text-slate-900 mr-3">${d[0]}</span>
+                                    <span class="text-sm font-semibold text-slate-500">${d[1]} (${d[2]}-${d[3]})</span>
+                                </div>
                             </div>
                             <div class="flex gap-3">
                                 <button onclick="editDefForm('${d[0]}','${d[1]}','${d[2]}','${d[3]}','${d[4]}')" 
@@ -795,8 +997,8 @@
                     });
                     
                     const explanation = Object.keys(codeCount).map(code => 
-                        `${code} ${codeCount[code]} gün`
-                    ).join(', ');
+                        `<span class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-bold text-white mr-1" style="background: ${shiftColors[code] || '#64748b'};">${code} ${codeCount[code]}</span>`
+                    ).join('');
                     
                     const target = parseFloat(p[3]) || 189;
                     const diff = net - target;
@@ -840,7 +1042,8 @@
                     const personelAdi = s[2];
                     const mesaiKodu = s[3];
                     const initials = personelAdi.split(' ').map(w => w[0]).join('');
-                    return `<div class="shift-badge" title="${personelAdi} - ${mesaiKodu}">${mesaiKodu} (${initials})</div>`;
+                    const color = shiftColors[mesaiKodu] || '#64748b';
+                    return `<div class="shift-badge shift-${mesaiKodu}" style="background: ${color};" title="${personelAdi} - ${mesaiKodu}">${mesaiKodu} (${initials})</div>`;
                 }).join('');
                 
                 body.innerHTML += `<div class="day-cell"><div class="day-number">${d}</div>${html}</div>`;
