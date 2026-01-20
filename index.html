@@ -2,278 +2,317 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nişantaşı Hastanesi - Yönetim Paneli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nişantaşı Hastanesi - Yönetim Sistemi</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
-        .day-cell { min-height: 110px; border: 1px solid #f1f5f9; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.4); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: #cbd5e1; border-radius: 1.5rem; overflow: hidden; }
+        .day-cell { min-height: 90px; background: white; padding: 6px; }
+        .tab-active { background: #2563eb; color: white; box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3); }
     </style>
 </head>
-<body class="bg-slate-100 min-h-screen">
+<body class="bg-slate-50 min-h-screen">
 
-    <div id="loginSection" class="flex items-center justify-center min-h-screen">
-        <div class="bg-white p-8 rounded-[40px] shadow-2xl w-full max-w-sm border border-gray-100 text-center">
-            <h2 class="text-3xl font-black mb-8 text-blue-900 tracking-tighter uppercase">NİŞANTAŞI</h2>
+    <div id="loginSection" class="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-slate-100 to-blue-50">
+        <div class="glass p-10 rounded-[3rem] shadow-2xl w-full max-w-sm text-center">
+            <h2 class="text-3xl font-black text-blue-900 tracking-tighter mb-8 uppercase">NİŞANTAŞI</h2>
             <div class="space-y-4">
-                <input type="text" id="username" placeholder="Kullanıcı" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500 font-bold">
-                <input type="password" id="password" placeholder="Şifre" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none focus:ring-2 focus:ring-blue-500 font-bold">
-                <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 text-white font-black p-4 rounded-2xl hover:bg-blue-700 shadow-xl transition-all uppercase">SİSTEME GİRİŞ</button>
+                <input type="text" id="username" placeholder="Kullanıcı" class="w-full p-4 rounded-2xl bg-white shadow-sm outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                <input type="password" id="password" placeholder="Şifre" class="w-full p-4 rounded-2xl bg-white shadow-sm outline-none focus:ring-2 focus:ring-blue-500 font-bold">
+                <button onclick="handleLogin()" id="loginBtn" class="w-full bg-blue-600 text-white font-extrabold py-5 rounded-2xl shadow-xl hover:bg-blue-700 active:scale-95 transition-all">GİRİŞ YAP</button>
             </div>
         </div>
     </div>
 
-    <div id="mainSection" class="hidden p-4 md:p-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-6 rounded-[32px] shadow-sm gap-4 border border-gray-100">
-                <div class="flex items-center gap-6">
-                    <div>
-                        <h1 class="text-xl font-black text-gray-800" id="welcomeMsg">Hoş Geldiniz</h1>
-                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Yönetim Paneli v8.0</p>
-                    </div>
-                    <nav class="flex bg-slate-100 p-1.5 rounded-2xl">
-                        <button onclick="switchTab('entry')" id="tabEntry" class="px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm transition">Kayıt Ekranı</button>
-                        <button onclick="switchTab('calendar')" id="tabCalendar" class="px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition">Aylık Rapor</button>
-                    </nav>
+    <div id="mainSection" class="hidden pb-24 md:pb-12">
+        <header class="sticky top-0 z-40 glass px-6 py-5 mb-8 border-b shadow-sm">
+            <div class="max-w-7xl mx-auto flex justify-between items-center">
+                <div>
+                    <h1 class="text-xl font-black text-slate-800" id="welcomeMsg">Panel</h1>
+                    <p class="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">Yönetim Paneli v9.0</p>
                 </div>
-                <div class="flex gap-3">
-                    <button onclick="openDefManager()" class="bg-slate-800 text-white px-5 py-2.5 rounded-2xl font-bold text-xs shadow-lg hover:bg-black transition flex items-center gap-2 uppercase">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
-                        Mesai Kodları
+                <div class="flex gap-2">
+                    <button onclick="openDefManager()" class="p-3.5 bg-slate-100 rounded-2xl text-slate-600 hover:bg-slate-200 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
                     </button>
-                    <button onclick="openPersonnelModal()" class="bg-blue-600 text-white px-5 py-2.5 rounded-2xl font-bold text-xs shadow-lg hover:bg-blue-700 transition uppercase">+ PERSONEL</button>
-                    <button onclick="location.reload()" class="bg-red-50 text-red-600 px-5 py-2.5 rounded-2xl font-bold text-xs hover:bg-red-100 transition uppercase">ÇIKIŞ</button>
+                    <button onclick="location.reload()" class="p-3.5 bg-red-50 rounded-2xl text-red-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-6">
+            <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] md:static md:translate-x-0 md:w-auto glass p-2 rounded-3xl flex gap-2 mb-10 z-50 shadow-2xl md:shadow-none">
+                <button onclick="switchTab('entry')" id="tabEntry" class="flex-1 md:flex-none py-4 px-8 rounded-2xl font-black text-xs uppercase tracking-widest tab-active transition-all">Giriş Ekranı</button>
+                <button onclick="switchTab('calendar')" id="tabCalendar" class="flex-1 md:flex-none py-4 px-8 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-500 transition-all">Aylık Rapor</button>
+            </div>
+
+            <div id="entryTab" class="space-y-8 animate-in fade-in duration-500">
+                <div class="glass p-8 rounded-[2.5rem] shadow-sm max-w-sm">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Vardiya Tarihi</label>
+                    <input type="date" id="mesaiTarihi" onchange="loadDataForDate()" class="w-full p-4 rounded-2xl bg-white shadow-inner font-extrabold outline-none text-slate-700">
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="personelTable">
+                    </div>
+                <div class="flex justify-center pt-10">
+                    <button onclick="openPersonnelModal()" class="bg-blue-600 text-white px-10 py-5 rounded-[2rem] font-black text-xs tracking-widest uppercase shadow-2xl shadow-blue-200">+ YENİ PERSONEL EKLE</button>
                 </div>
             </div>
 
-            <div id="entryTab" class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
-                <div class="mb-8 max-w-xs">
-                    <label class="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">Tarih Seçin:</label>
-                    <input type="date" id="mesaiTarihi" onchange="loadDataForDate()" class="w-full p-4 border rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50 font-bold shadow-inner">
-                </div>
-                <div class="overflow-x-auto rounded-3xl border border-gray-100">
-                    <table class="w-full text-left">
-                        <thead class="bg-slate-50 text-gray-400 text-[10px] font-black uppercase tracking-widest">
-                            <tr><th class="p-5 border-b">Personel Bilgileri</th><th class="p-5 border-b">Mesai Kodu</th><th class="p-5 border-b text-center">İşlem</th></tr>
-                        </thead>
-                        <tbody id="personelTable" class="divide-y divide-gray-50"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div id="calendarTab" class="hidden space-y-8">
-                <div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="text-2xl font-black text-blue-900 uppercase tracking-tighter">Personel Hakediş Özeti</h2>
-                        <div class="flex gap-2">
-                            <select id="calMonth" onchange="loadMonthlyCalendar()" class="p-3 border rounded-2xl text-xs font-bold bg-slate-50 outline-none"></select>
-                            <select id="calYear" onchange="loadMonthlyCalendar()" class="p-3 border rounded-2xl text-xs font-bold bg-slate-50 outline-none"></select>
+            <div id="calendarTab" class="hidden space-y-10 animate-in fade-in duration-500">
+                <div class="glass p-8 rounded-[3rem] shadow-sm">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
+                        <h2 class="text-2xl font-black text-slate-800 tracking-tighter uppercase">Hakediş Özeti</h2>
+                        <div class="flex gap-3 w-full md:w-auto">
+                            <select id="calMonth" onchange="loadMonthlyCalendar()" class="flex-1 p-4 rounded-2xl bg-slate-50 font-bold outline-none border-none shadow-sm"></select>
+                            <select id="calYear" onchange="loadMonthlyCalendar()" class="flex-1 p-4 rounded-2xl bg-slate-50 font-bold outline-none border-none shadow-sm"></select>
                         </div>
                     </div>
-                    <div class="overflow-x-auto rounded-3xl border border-gray-100">
+
+                    <div class="overflow-x-auto">
                         <table class="w-full text-left">
-                            <thead class="bg-slate-50 text-[9px] text-gray-400 uppercase font-black tracking-widest">
+                            <thead class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400">
                                 <tr>
-                                    <th class="p-4 border-b">Ad Soyad</th><th class="p-4 border-b">Toplam Gün</th>
-                                    <th class="p-4 border-b text-blue-600">Brüt Saat</th><th class="p-4 border-b text-amber-600">Mola</th>
-                                    <th class="p-4 border-b text-green-600 font-black">Sonuç Saat</th><th class="p-4 border-b">Hedef</th>
-                                    <th class="p-4 border-b text-center">Fark (+/-)</th>
+                                    <th class="pb-6 px-4">Personel</th><th class="pb-6 px-4">Gün</th>
+                                    <th class="pb-6 px-4">Brüt</th><th class="pb-6 px-4">Mola</th>
+                                    <th class="pb-6 px-4 text-green-600">Net</th><th class="pb-6 px-4">Hedef</th>
+                                    <th class="pb-6 px-4 text-center">Fark</th>
                                 </tr>
                             </thead>
-                            <tbody id="summaryTableBody" class="text-xs font-bold divide-y divide-gray-50"></tbody>
+                            <tbody id="summaryTableBody" class="divide-y divide-slate-100 text-xs font-extrabold"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100">
-                    <h2 class="text-center text-[10px] font-black text-slate-300 uppercase tracking-[0.3em] mb-8">Aylık Görsel Takvim</h2>
-                    <div class="calendar-grid bg-slate-200 gap-[1px] border border-slate-200 rounded-3xl overflow-hidden shadow-2xl">
-                        <div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">PZT</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">SAL</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">ÇAR</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">PER</div><div class="bg-white p-3 text-center text-[10px] font-black text-slate-400">CUM</div><div class="bg-white p-3 text-center text-[10px] font-black text-blue-400">CMT</div><div class="bg-white p-3 text-center text-[10px] font-black text-red-400">PAZ</div>
+                <div class="glass p-4 rounded-[3rem] shadow-sm">
+                    <div class="calendar-grid">
+                        <div class="bg-slate-50 p-4 text-center text-[10px] font-black text-slate-400">PZT</div><div class="bg-slate-50 p-4 text-center text-[10px] font-black text-slate-400">SAL</div><div class="bg-slate-50 p-4 text-center text-[10px] font-black text-slate-400">ÇAR</div><div class="bg-slate-50 p-4 text-center text-[10px] font-black text-slate-400">PER</div><div class="bg-slate-50 p-4 text-center text-[10px] font-black text-slate-400">CUM</div><div class="bg-blue-50 p-4 text-center text-[10px] font-black text-blue-400">CMT</div><div class="bg-red-50 p-4 text-center text-[10px] font-black text-red-400">PAZ</div>
                         <div id="calendarBody" class="contents"></div>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <div id="personnelModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-[40px] p-10 w-full max-w-md shadow-2xl">
-            <h2 id="modalTitle" class="text-2xl font-black mb-8 text-gray-800 text-center uppercase">Personel Kartı</h2>
-            <input type="hidden" id="editPersonId">
-            <div class="space-y-4">
-                <input type="text" id="pName" placeholder="Ad Soyad" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none font-bold">
-                <input type="text" id="pUnit" placeholder="Birim / Görev" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none font-bold">
-                <input type="number" id="pTarget" placeholder="Hedef Mesai (Örn: 189)" class="w-full p-4 border rounded-2xl bg-slate-50 outline-none font-bold">
-                <div class="flex gap-4 pt-4">
-                    <button onclick="savePersonnel()" class="flex-1 bg-blue-600 text-white font-black p-4 rounded-2xl shadow-xl hover:bg-blue-700 uppercase">KAYDET</button>
-                    <button onclick="closePersonnelModal()" class="flex-1 bg-slate-100 text-slate-400 font-bold p-4 rounded-2xl uppercase">İPTAL</button>
-                </div>
+    <div id="modalOverlay" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-6">
+        <div id="modalContent" class="glass rounded-[3rem] p-10 w-full max-w-xl shadow-2xl max-h-[90vh] overflow-y-auto">
             </div>
-        </div>
-    </div>
-
-    <div id="defManagerModal" class="hidden fixed inset-0 bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-[40px] p-10 w-full max-w-4xl shadow-2xl overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-black text-gray-800 tracking-tighter uppercase">Mesai Kodları</h2>
-                <button onclick="openDefForm()" class="bg-green-600 text-white px-4 py-2 rounded-xl font-bold text-xs uppercase shadow-lg">+ Yeni Kod Ekle</button>
-            </div>
-            <div id="defForm" class="hidden bg-slate-50 p-6 rounded-3xl mb-8 border border-slate-200 space-y-4">
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
-                    <input type="text" id="defKod" placeholder="Kod (HG)" class="p-3 border rounded-xl outline-none font-bold text-sm uppercase">
-                    <input type="text" id="defDesc" placeholder="Açıklama" class="p-3 border rounded-xl outline-none font-bold text-sm">
-                    <input type="text" id="defStart" placeholder="Başlangıç (08:00)" class="p-3 border rounded-xl outline-none font-bold text-sm">
-                    <input type="text" id="defEnd" placeholder="Bitiş (20:00)" class="p-3 border rounded-xl outline-none font-bold text-sm">
-                    <input type="number" id="defMola" placeholder="Mola (Dk)" class="p-3 border rounded-xl outline-none font-bold text-sm">
-                </div>
-                <div class="flex justify-end gap-2"><button onclick="saveDefinition()" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold text-xs uppercase">Kaydet</button><button onclick="closeDefForm()" class="bg-gray-200 text-gray-600 px-6 py-2 rounded-xl font-bold text-xs uppercase">Vazgeç</button></div>
-            </div>
-            <div class="overflow-x-auto rounded-3xl border"><table class="w-full text-left text-sm"><thead class="bg-slate-50 text-[10px] font-black text-gray-400 uppercase tracking-widest"><tr><th class="p-4">Kod</th><th class="p-4">Açıklama</th><th class="p-4">Saatler</th><th class="p-4">Mola</th><th class="p-4 text-center">İşlem</th></tr></thead><tbody id="defTableBody" class="font-bold divide-y divide-gray-50"></tbody></table></div>
-            <div class="mt-8 flex justify-center"><button onclick="closeDefManager()" class="bg-slate-100 text-slate-500 font-bold px-10 py-3 rounded-2xl uppercase">KAPAT</button></div>
-        </div>
     </div>
 
     <script>
         const API_URL = "https://script.google.com/macros/s/AKfycbzsqLhX0aZ23cONr9I5AFpjQ3mXNe4APpK5KF2k5ShDc-R9FExe4UdUMe6Qde2lgJnW5g/exec"; 
         let currentUser = "", definitions = [], personnel = [], savedShifts = {};
 
-        window.onload = () => {
-            const mS = document.getElementById('calMonth'), yS = document.getElementById('calYear');
-            const months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
-            months.forEach((m,i) => mS.innerHTML += `<option value="${(i+1).toString().padStart(2,'0')}">${m}</option>`);
-            const curY = new Date().getFullYear();
-            for(let y=curY; y>=curY-1; y--) yS.innerHTML += `<option value="${y}">${y}</option>`;
-            mS.value = (new Date().getMonth()+1).toString().padStart(2,'0');
-        };
-
+        // 1. OTURUM YÖNETİMİ
         async function handleLogin() {
-            const user = document.getElementById('username').value, pass = document.getElementById('password').value;
-            if(!user || !pass) return;
-            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: user, password: pass })});
-            const result = await resp.json();
-            if (result.status === "success") {
-                currentUser = result.userName;
-                document.getElementById('loginSection').classList.add('hidden');
-                document.getElementById('mainSection').classList.remove('hidden');
-                document.getElementById('welcomeMsg').innerText = "Sorumlu: " + currentUser;
-                document.getElementById('mesaiTarihi').value = new Date().toISOString().split('T')[0];
-                loadDataForDate();
-            } else alert("Giriş Başarısız!");
+            const u = document.getElementById('username').value, p = document.getElementById('password').value;
+            if(!u || !p) return;
+            const btn = document.getElementById('loginBtn'); btn.innerText = "BAĞLANILIYOR...";
+            try {
+                const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'login', username: u, password: p })});
+                const res = await resp.json();
+                if (res.status === "success") {
+                    currentUser = res.userName;
+                    document.getElementById('loginSection').classList.add('hidden');
+                    document.getElementById('mainSection').classList.remove('hidden');
+                    document.getElementById('welcomeMsg').innerText = "Merhaba, " + currentUser.split(' ')[0];
+                    document.getElementById('mesaiTarihi').value = new Date().toISOString().split('T')[0];
+                    initDropdowns(); loadDataForDate();
+                } else alert("Hatalı Bilgi!");
+            } catch (e) { alert("API Hatası!"); } finally { btn.innerText = "GİRİŞ YAP"; }
         }
 
-        async function loadDataForDate() {
-            const dInput = document.getElementById('mesaiTarihi').value;
-            const dArr = dInput.split('-'), fD = dArr[2] + "." + dArr[1] + "." + dArr[0];
-            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getInitialData', targetDate: fD })});
-            const data = await resp.json();
-            definitions = data.definitions; personnel = data.personnel;
-            savedShifts = {}; data.existingShifts.forEach(s => savedShifts[s[1]] = s[3]);
-            renderTable();
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('personelTable');
-            tbody.innerHTML = personnel.map(p => {
-                const initCode = savedShifts[p[0]] || "", isSaved = initCode !== "";
-                return `
-                <tr class="hover:bg-slate-50 transition group font-bold">
-                    <td class="p-5">
-                        <div class="flex items-center justify-between">
-                            <div><div class="text-gray-800 text-sm tracking-tight">${p[1]}</div><div class="text-[9px] text-gray-400 font-black uppercase tracking-widest">${p[2]}</div></div>
-                            <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                <button onclick="editPersonnel('${p[0]}','${p[1]}','${p[2]}','${p[3]}')" class="text-blue-500 p-2 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-blue-100 transition">Düzenle</button>
-                                <button onclick="deletePersonnel('${p[0]}','${p[1]}')" class="text-red-500 p-2 hover:bg-white rounded-lg shadow-sm border border-transparent hover:border-red-100 transition">Sil</button>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="p-5">
-                        <select id="code_${p[0]}" onchange="onCodeSelectChange('${p[0]}')" class="w-full p-3 border rounded-2xl bg-slate-50 outline-none text-xs font-bold text-gray-600 focus:ring-2 focus:ring-blue-100">
-                            <option value="">Seçiniz...</option>
-                            ${definitions.map(d => `<option value="${d[0]}" ${d[0] === initCode ? 'selected' : ''}>${d[0]}</option>`).join('')}
-                        </select>
-                    </td>
-                    <td class="p-5 text-center">
-                        <button id="btn_${p[0]}" onclick="saveShift('${p[0]}', '${p[1]}')" class="${isSaved ? 'bg-slate-200 text-slate-400' : 'bg-green-600 text-white shadow-xl'} px-8 py-3 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all">
-                            ${isSaved ? 'İŞLENDİ' : 'KAYDET'}
-                        </button>
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        // --- TAB GEÇİŞLERİ VE RAPORLAMA ---
+        // 2. SEKME YÖNETİMİ
         function switchTab(tab) {
             const tE = document.getElementById('tabEntry'), tC = document.getElementById('tabCalendar');
             if(tab === 'entry') {
                 document.getElementById('entryTab').classList.remove('hidden'); document.getElementById('calendarTab').classList.add('hidden');
-                tE.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm transition";
-                tC.className = "px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition";
+                tE.className = "flex-1 md:flex-none py-4 px-8 rounded-2xl font-black text-xs uppercase tracking-widest tab-active transition-all";
+                tC.className = "flex-1 md:flex-none py-4 px-8 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-500 transition-all";
             } else {
                 document.getElementById('entryTab').classList.add('hidden'); document.getElementById('calendarTab').classList.remove('hidden');
-                tC.className = "px-5 py-2.5 rounded-xl font-bold text-xs bg-white shadow-sm transition";
-                tE.className = "px-5 py-2.5 rounded-xl font-bold text-xs text-slate-500 hover:text-blue-600 transition";
+                tC.className = "flex-1 md:flex-none py-4 px-8 rounded-2xl font-black text-xs uppercase tracking-widest tab-active transition-all";
+                tE.className = "flex-1 md:flex-none py-4 px-8 rounded-2xl font-black text-xs uppercase tracking-widest text-slate-500 transition-all";
                 loadMonthlyCalendar();
             }
         }
 
+        // 3. VERİ YÜKLEME VE KARTLAR
+        async function loadDataForDate() {
+            const d = document.getElementById('mesaiTarihi').value;
+            if(!d) return;
+            const fD = d.split('-').reverse().join('.');
+            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getInitialData', targetDate: fD })});
+            const data = await resp.json();
+            definitions = data.definitions; personnel = data.personnel;
+            savedShifts = {}; data.existingShifts.forEach(s => savedShifts[s[1]] = s[3]);
+            renderCards();
+        }
+
+        function renderCards() {
+            const container = document.getElementById('personelTable');
+            container.innerHTML = personnel.map(p => {
+                const code = savedShifts[p[0]] || "", isSaved = code !== "";
+                return `
+                <div class="glass p-8 rounded-[2.5rem] shadow-sm flex flex-col justify-between hover:shadow-xl transition-all border-none">
+                    <div>
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-lg font-black text-slate-800 tracking-tight">${p[1]}</h3>
+                                <p class="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">${p[2]}</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="editPersonnelForm('${p[0]}','${p[1]}','${p[2]}','${p[3]}')" class="p-2.5 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-all">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                                </button>
+                                <button onclick="deletePersonnel('${p[0]}','${p[1]}')" class="p-2.5 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 transition-all">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <select id="code_${p[0]}" onchange="onCodeChange('${p[0]}')" class="w-full p-4 rounded-2xl bg-slate-50 border-none font-extrabold text-xs outline-none mb-6">
+                            <option value="">KOD SEÇİNİZ</option>
+                            ${definitions.map(d => `<option value="${d[0]}" ${d[0] === code ? 'selected' : ''}>${d[0]} (${d[2]}-${d[3]})</option>`).join('')}
+                        </select>
+                    </div>
+                    <button id="btn_${p[0]}" onclick="saveShift('${p[0]}', '${p[1]}')" 
+                        class="w-full py-5 rounded-[1.5rem] font-black text-[10px] tracking-[0.2em] uppercase transition-all ${isSaved ? 'bg-slate-100 text-slate-400' : 'bg-green-600 text-white shadow-xl shadow-green-100'}">
+                        ${isSaved ? 'İŞLENDİ' : 'KAYDET'}
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        // 4. MESAİ KAYDETME
+        async function saveShift(pId, pName) {
+            const date = document.getElementById('mesaiTarihi').value, code = document.getElementById('code_' + pId).value, btn = document.getElementById('btn_' + pId);
+            if (!date || !code || btn.innerText === "İŞLENDİ") return;
+            const fD = date.split('-').reverse().join('.'), def = definitions.find(d => d[0] === code);
+            btn.innerText = "GÖNDERİLİYOR...";
+            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'saveShift', tarih: fD, personelId: pId, adSoyad: pName, mesaiKodu: code, baslangic: def[2], bitis: def[3], kaydeden: currentUser })});
+            const res = await resp.json();
+            if(res.status === "success") { savedShifts[pId] = code; btn.innerText = "İŞLENDİ"; btn.className = "w-full py-5 rounded-[1.5rem] font-black text-[10px] tracking-[0.2em] uppercase bg-slate-100 text-slate-400"; }
+        }
+
+        function onCodeChange(pId) { const b = document.getElementById('btn_' + pId); b.innerText = "KAYDET"; b.className = "w-full py-5 rounded-[1.5rem] font-black text-[10px] tracking-[0.2em] uppercase bg-green-600 text-white shadow-xl shadow-green-100"; }
+
+        // 5. RAPORLAMA VE TAKVİM
         async function loadMonthlyCalendar() {
             const m = document.getElementById('calMonth').value, y = document.getElementById('calYear').value;
             const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'getMonthlyShifts', month: m, year: y })});
             const data = await resp.json();
-            
-            const summaryTable = document.getElementById('summaryTableBody');
-            summaryTable.innerHTML = personnel.map(p => {
-                const pShifts = data.shifts.filter(s => s[1] == p[0]);
-                let bH = 0, mH = 0, nH = 0, dSet = new Set();
-                pShifts.forEach(s => { bH += parseFloat(s[6])||0; mH += parseFloat(s[7])||0; nH += parseFloat(s[8])||0; dSet.add(s[0]); });
-                const target = parseFloat(p[3]) || 189;
-                const diff = nH - target;
-                return `<tr class="hover:bg-gray-50 transition"><td class="p-4 text-gray-800">${p[1]}</td><td class="p-4">${dSet.size} Gün</td><td class="p-4 text-blue-600 font-black">${bH.toFixed(1)} h</td><td class="p-4 text-amber-600 font-black">${mH.toFixed(1)} h</td><td class="p-4 text-green-600 font-black">${nH.toFixed(1)} h</td><td class="p-4 text-gray-400 font-black">${target} h</td><td class="p-4 text-center ${diff < 0 ? 'text-red-500' : 'text-green-600'} font-black tracking-tight">${(diff >= 0 ? "+" : "") + diff.toFixed(1)} h</td></tr>`;
+            const tbody = document.getElementById('summaryTableBody');
+            tbody.innerHTML = personnel.map(p => {
+                const sArr = data.shifts.filter(s => s[1] == p[0]);
+                let brut = 0, mola = 0, net = 0, days = new Set();
+                sArr.forEach(s => { brut += parseFloat(s[6])||0; mola += parseFloat(s[7])||0; net += parseFloat(s[8])||0; days.add(s[0]); });
+                const target = parseFloat(p[3]) || 189, diff = net - target;
+                return `<tr><td class="p-6 text-slate-800">${p[1]}</td><td class="p-6">${days.size} G</td><td class="p-6 text-blue-500 font-bold">${brut.toFixed(1)} h</td><td class="p-6 text-slate-400">${mola.toFixed(1)} h</td><td class="p-6 text-green-600 font-bold">${net.toFixed(1)} h</td><td class="p-6 text-slate-300">${target}</td><td class="p-6 text-center ${diff < 0 ? 'text-red-500' : 'text-green-600'} font-black text-sm">${(diff>=0?'+':'')+diff.toFixed(1)} h</td></tr>`;
             }).join('');
             renderCalendar(data.shifts, m, y);
         }
 
         function renderCalendar(shifts, month, year) {
             const body = document.getElementById('calendarBody'); body.innerHTML = "";
-            const fDay = new Date(year, month - 1, 1).getDay(), dIM = new Date(year, month, 0).getDate();
-            let offset = fDay === 0 ? 6 : fDay - 1;
-            for(let i=0; i<offset; i++) body.innerHTML += `<div class="day-cell bg-slate-50/50"></div>`;
-            for(let d=1; d<=dIM; d++) {
-                const dS = (d < 10 ? "0"+d : d) + "." + month + "." + year;
-                const daily = shifts.filter(s => s[0] === dS);
-                let hStr = daily.map(s => `<div class="text-[8px] mb-0.5 p-1 bg-blue-50 text-blue-700 rounded-lg border border-blue-100 font-bold truncate">${s[3]}: ${s[2].split(' ')[0]}</div>`).join('');
-                body.innerHTML += `<div class="day-cell bg-white p-2 overflow-y-auto"><div class="text-[10px] font-black text-slate-300 mb-1">${d}</div>${hStr}</div>`;
+            const fD = new Date(year, month - 1, 1).getDay(), dM = new Date(year, month, 0).getDate();
+            let off = fD === 0 ? 6 : fD - 1;
+            for(let i=0; i<off; i++) body.innerHTML += `<div class="day-cell bg-slate-50/30"></div>`;
+            for(let d=1; d<=dM; d++) {
+                const ds = (d<10?'0'+d:d)+'.'+month+'.'+year, daily = shifts.filter(s => s[0] === ds);
+                let html = daily.map(s => `<div class="text-[7px] mb-0.5 p-1 bg-blue-50 text-blue-700 rounded-md truncate font-black">${s[3]}: ${s[2].split(' ')[0]}</div>`).join('');
+                body.innerHTML += `<div class="day-cell"><div class="text-[9px] font-black text-slate-300 mb-1">${d}</div>${html}</div>`;
             }
         }
 
-        // --- YÖNETİM FONKSİYONLARI (PERSONEL & TANIM) ---
-        function openPersonnelModal() { document.getElementById('modalTitle').innerText = "Personel Kayıt"; document.getElementById('editPersonId').value = ""; document.getElementById('pName').value = ""; document.getElementById('pUnit').value = ""; document.getElementById('pTarget').value = "189"; document.getElementById('personnelModal').classList.remove('hidden'); }
-        function editPersonnel(id, n, u, t) { document.getElementById('modalTitle').innerText = "Düzenle"; document.getElementById('editPersonId').value = id; document.getElementById('pName').value = n; document.getElementById('pUnit').value = u; document.getElementById('pTarget').value = t; document.getElementById('personnelModal').classList.remove('hidden'); }
-        function closePersonnelModal() { document.getElementById('personnelModal').classList.add('hidden'); }
-        async function savePersonnel() { const id = document.getElementById('editPersonId').value, act = id ? "updatePersonnel" : "addPersonnel", n = document.getElementById('pName').value, u = document.getElementById('pUnit').value, t = document.getElementById('pTarget').value; if(!n||!u||!t) return; await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: act, personelId: id, adSoyad: n, birim: u, hedefMesai: t })}); closePersonnelModal(); loadDataForDate(); }
-        async function deletePersonnel(id, name) { if (confirm(`${name} silinecek. Emin misiniz?`)) { await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: "deletePersonnel", personelId: id })}); loadDataForDate(); } }
-
-        function openDefManager() { document.getElementById('defManagerModal').classList.remove('hidden'); renderDefTable(); }
-        function closeDefManager() { document.getElementById('defManagerModal').classList.add('hidden'); }
-        function openDefForm() { document.getElementById('defForm').classList.remove('hidden'); }
-        function closeDefForm() { document.getElementById('defForm').classList.add('hidden'); }
-        function renderDefTable() { const b = document.getElementById('defTableBody'); b.innerHTML = definitions.map(d => `<tr class="hover:bg-slate-50 transition"><td class="p-4">${d[0]}</td><td class="p-4">${d[1]}</td><td class="p-4 text-gray-400 font-bold">${d[2]}-${d[3]}</td><td class="p-4">${d[4]} dk</td><td class="p-4 text-center"><button onclick="editDef('${d[0]}','${d[1]}','${d[2]}','${d[3]}','${d[4]}')" class="text-blue-500 font-bold mr-3">Düzelt</button><button onclick="deleteDef('${d[0]}')" class="text-red-500 font-bold">Sil</button></td></tr>`).join(''); }
-        async function saveDefinition() { const d = { action: 'saveDefinition', kisaKod: document.getElementById('defKod').value, aciklama: document.getElementById('defDesc').value, baslangic: document.getElementById('defStart').value, bitis: document.getElementById('defEnd').value, mola: document.getElementById('defMola').value }; await fetch(API_URL, { method: 'POST', body: JSON.stringify(d)}); loadDataForDate(); closeDefForm(); renderDefTable(); }
-        async function deleteDef(k) { if(confirm(k + " silinecek?")) { await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDefinition', kisaKod: k })}); loadDataForDate(); renderDefTable(); } }
-        function editDef(k, d, s, e, m) { document.getElementById('defKod').value = k; document.getElementById('defDesc').value = d; document.getElementById('defStart').value = s; document.getElementById('defEnd').value = e; document.getElementById('defMola').value = m; openDefForm(); }
-
-        // --- MESAİ KAYIT ---
-        async function saveShift(pId, pName) {
-            const dI = document.getElementById('mesaiTarihi').value, code = document.getElementById('code_' + pId).value, btn = document.getElementById('btn_' + pId);
-            if (!dI || !code || btn.innerText === "İŞLENDİ") return;
-            const dArr = dI.split('-'), fD = dArr[2] + "." + dArr[1] + "." + dArr[0];
-            const def = definitions.find(d => d[0] === code);
-            btn.innerText = "...";
-            const resp = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'saveShift', tarih: fD, personelId: pId, adSoyad: pName, mesaiKodu: code, baslangic: def[2], bitis: def[3], kaydeden: currentUser })});
-            const res = await resp.json();
-            if(res.status === "success") { savedShifts[pId] = code; btn.innerText = "İŞLENDİ"; btn.className = "bg-slate-200 text-slate-400 px-8 py-3 rounded-2xl font-black text-[10px] uppercase cursor-default shadow-none"; }
+        // 6. YÖNETİM MODALLARI
+        function openPersonnelModal() {
+            showModal(`
+                <h2 class="text-2xl font-black mb-8 uppercase tracking-tight text-slate-800">Personel Kaydı</h2>
+                <div class="space-y-4">
+                    <input id="pName" placeholder="Ad Soyad" class="w-full p-4 rounded-2xl bg-slate-50 outline-none font-bold">
+                    <input id="pUnit" placeholder="Birim / Görev" class="w-full p-4 rounded-2xl bg-slate-50 outline-none font-bold">
+                    <input id="pTarget" type="number" placeholder="Hedef Mesai (189)" class="w-full p-4 rounded-2xl bg-slate-50 outline-none font-bold">
+                    <div class="flex gap-4 pt-6">
+                        <button onclick="savePersonnelAction()" class="flex-1 bg-blue-600 text-white font-black py-5 rounded-2xl shadow-xl">KAYDET</button>
+                        <button onclick="closeModal()" class="flex-1 bg-slate-100 text-slate-400 font-bold py-5 rounded-2xl">İPTAL</button>
+                    </div>
+                </div>
+            `);
         }
-        function onCodeSelectChange(pId) { const btn = document.getElementById('btn_' + pId); if(btn.innerText !== "İŞLENDİ") { btn.innerText = "KAYDET"; btn.className = "bg-green-600 text-white shadow-xl px-8 py-3 rounded-2xl font-black text-[10px] uppercase cursor-pointer"; } }
+
+        function editPersonnelForm(id, n, u, t) {
+            showModal(`
+                <h2 class="text-2xl font-black mb-8 uppercase tracking-tight text-slate-800">Düzenle</h2>
+                <input type="hidden" id="editPersonId" value="${id}">
+                <div class="space-y-4">
+                    <input id="pName" value="${n}" class="w-full p-4 rounded-2xl bg-slate-50 outline-none font-bold">
+                    <input id="pUnit" value="${u}" class="w-full p-4 rounded-2xl bg-slate-50 outline-none font-bold">
+                    <input id="pTarget" value="${t}" class="w-full p-4 rounded-2xl bg-slate-50 outline-none font-bold">
+                    <div class="flex gap-4 pt-6">
+                        <button onclick="updatePersonnelAction()" class="flex-1 bg-blue-600 text-white font-black py-5 rounded-2xl shadow-xl">GÜNCELLE</button>
+                        <button onclick="closeModal()" class="flex-1 bg-slate-100 text-slate-400 font-bold py-5 rounded-2xl">İPTAL</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        async function updatePersonnelAction() {
+            const id = document.getElementById('editPersonId').value, n = document.getElementById('pName').value, u = document.getElementById('pUnit').value, t = document.getElementById('pTarget').value;
+            await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'updatePersonnel', personelId: id, adSoyad: n, birim: u, hedefMesai: t })});
+            closeModal(); loadDataForDate();
+        }
+
+        async function deletePersonnel(id, n) { if(confirm(n + " silinecek?")) { await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deletePersonnel', personelId: id })}); loadDataForDate(); } }
+
+        function openDefManager() {
+            showModal(`
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-2xl font-black uppercase tracking-tight text-slate-800">Kodlar</h2>
+                    <button onclick="openDefForm()" class="bg-green-600 text-white px-5 py-2 rounded-xl font-bold text-[10px] uppercase">+ YENİ EKLE</button>
+                </div>
+                <div id="defFormArea" class="hidden mb-8 p-6 bg-slate-50 rounded-[2rem] space-y-4 border">
+                    <div class="grid grid-cols-2 gap-3">
+                        <input id="defK" placeholder="Kod (HG)" class="p-3 rounded-xl border-none outline-none font-bold text-xs">
+                        <input id="defD" placeholder="Açıklama" class="p-3 rounded-xl border-none outline-none font-bold text-xs">
+                        <input id="defS" placeholder="08:00" class="p-3 rounded-xl border-none outline-none font-bold text-xs">
+                        <input id="defE" placeholder="20:00" class="p-3 rounded-xl border-none outline-none font-bold text-xs">
+                        <input id="defM" type="number" placeholder="Mola (Dk)" class="col-span-2 p-3 rounded-xl border-none outline-none font-bold text-xs">
+                    </div>
+                    <button onclick="saveDefAction()" class="w-full bg-blue-600 text-white font-black py-3 rounded-xl text-xs uppercase">KAYDET</button>
+                </div>
+                <div class="space-y-3" id="defList">
+                    ${definitions.map(d => `
+                        <div class="flex justify-between items-center p-4 bg-white rounded-2xl shadow-sm">
+                            <div><span class="font-black text-blue-600 mr-2">${d[0]}</span><span class="text-xs text-slate-400 font-bold">${d[2]}-${d[3]} (${d[4]}dk)</span></div>
+                            <button onclick="deleteDefAction('${d[0]}')" class="text-red-500 font-bold text-[10px]">SİL</button>
+                        </div>
+                    `).join('')}
+                </div>
+                <button onclick="closeModal()" class="w-full mt-8 bg-slate-100 text-slate-400 font-black py-4 rounded-2xl text-xs uppercase">KAPAT</button>
+            `);
+        }
+
+        function openDefForm() { document.getElementById('defFormArea').classList.remove('hidden'); }
+        async function saveDefAction() {
+            const data = { action: 'saveDefinition', kisaKod: document.getElementById('defK').value, aciklama: document.getElementById('defD').value, baslangic: document.getElementById('defS').value, bitis: document.getElementById('defE').value, mola: document.getElementById('defM').value };
+            await fetch(API_URL, { method: 'POST', body: JSON.stringify(data)}); closeModal(); loadDataForDate();
+        }
+        async function deleteDefAction(k) { if(confirm(k+" silinecek?")) { await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDefinition', kisaKod: k })}); closeModal(); loadDataForDate(); } }
+
+        // HELPERS
+        function showModal(content) { const o = document.getElementById('modalOverlay'), c = document.getElementById('modalContent'); c.innerHTML = content; o.classList.remove('hidden'); }
+        function closeModal() { document.getElementById('modalOverlay').classList.add('hidden'); }
+        function initDropdowns() {
+            const mS = document.getElementById('calMonth'), yS = document.getElementById('calYear'), months = ["Ocak","Şubat","Mart","Nisan","Mayıs","Haziran","Temmuz","Ağustos","Eylül","Ekim","Kasım","Aralık"];
+            months.forEach((m,i) => mS.innerHTML += `<option value="${(i+1).toString().padStart(2,'0')}">${m}</option>`);
+            const cy = new Date().getFullYear(); for(let y=cy; y>=cy-1; y--) yS.innerHTML += `<option value="${y}">${y}</option>`;
+            mS.value = (new Date().getMonth()+1).toString().padStart(2,'0');
+        }
     </script>
 </body>
 </html>
